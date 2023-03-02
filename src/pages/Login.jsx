@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 
 export default function Login() {
@@ -12,6 +13,8 @@ export default function Login() {
     setValidaPassword,
     user,
   } = useContext(AppContext);
+
+  const history = useHistory();
 
   const verifyEmail = ({ target: { value } }) => {
     const validEmail = (/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(value);
@@ -33,6 +36,10 @@ export default function Login() {
     });
   };
 
+  useEffect(() => {
+    localStorage.setItem('user', JSON.stringify({ email: user.email }));
+  }, [user.email]);
+
   const verifyBtn = !(validaEmail && validaPassword);
 
   return (
@@ -42,18 +49,21 @@ export default function Login() {
         type="email"
         data-testid="email-input"
         value={ email }
+        name="email"
         onChange={ verifyEmail }
       />
       <input
         type="password"
         data-testid="password-input"
         value={ password }
+        name="password"
         onChange={ verifyPassword }
       />
       <button
         type="button"
         data-testid="login-submit-btn"
         disabled={ verifyBtn }
+        onClick={ () => history.push('/meals') }
       >
         Enter
       </button>

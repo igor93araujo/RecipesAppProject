@@ -28,4 +28,18 @@ describe('2 - Teste da tela de comidas', () => {
       expect(headerProfile).toBeInTheDocument();
     });
   });
+
+  it('2.3 - Teste ao clicar no icone de busca e redirecionado para pagina de busca', () => {
+    renderWithRouter(<App />, ['/meals']);
+
+    const searchInput = screen.queryByTestId('search-input');
+    const searchButton = screen.getByTestId('search-top-btn');
+
+    expect(searchInput).not.toBeInTheDocument();
+
+    waitFor(() => {
+      userEvent.click(searchButton);
+      expect(searchInput).toBeInTheDocument();
+    });
+  });
 });

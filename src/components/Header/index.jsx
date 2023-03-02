@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
+import './styles.css';
+import { AppContext } from '../../context/AppContext';
 
 function Header({ title, isIconProfile, isIconSearch }) {
   const history = useHistory();
+  const { visibleSearch, setVisibleSearch } = useContext(AppContext);
+
+  const handleClick = () => {
+    setVisibleSearch(!visibleSearch);
+  };
   return (
     <header>
       { isIconProfile && (
@@ -21,8 +28,21 @@ function Header({ title, isIconProfile, isIconSearch }) {
         </button>
       )}
       <h1 data-testid="page-title">{title}</h1>
+      {
+        visibleSearch && (
+          <input
+            data-testid="search-input"
+            type="text"
+            placeholder="Buscar Receita"
+            className="search-input"
+          />
+        )
+      }
       { isIconSearch && (
-        <button type="button">
+        <button
+          type="button"
+          onClick={ handleClick }
+        >
           <img
             data-testid="search-top-btn"
             src={ searchIcon }

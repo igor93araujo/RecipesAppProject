@@ -12,6 +12,8 @@ export function AppProvider({ children }) {
   const [validaPassword, setValidaPassword] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
+  const [visibleSearch, setVisibleSearch] = useState(false);
+
   const context = useMemo(
     () => ({
       user,
@@ -22,6 +24,8 @@ export function AppProvider({ children }) {
       setValidaPassword,
       buttonDisabled,
       setButtonDisabled,
+      visibleSearch,
+      setVisibleSearch,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
@@ -30,6 +34,8 @@ export function AppProvider({ children }) {
       validaEmail, setValidaEmail,
       validaPassword, setValidaPassword,
       buttonDisabled, setButtonDisabled,
+      visibleSearch,
+      setVisibleSearch,
     ],
   );
 

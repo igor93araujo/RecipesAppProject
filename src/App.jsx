@@ -5,6 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
 import { AppProvider } from './context/AppProvider';
+import Meals from './components/Meals/Index';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
     <AppProvider>
       <Switch>
         <Route exact path="/" component={ Login } />
+        <Route exact path="/meals" component={ Meals } />
       </Switch>
     </AppProvider>
   );

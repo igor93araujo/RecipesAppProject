@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 
@@ -36,9 +36,10 @@ export default function Login() {
     });
   };
 
-  useEffect(() => {
+  const handleClick = () => {
     localStorage.setItem('user', JSON.stringify({ email: user.email }));
-  }, [user.email]);
+    history.push('/meals');
+  };
 
   const verifyBtn = !(validaEmail && validaPassword);
 
@@ -63,7 +64,7 @@ export default function Login() {
         type="button"
         data-testid="login-submit-btn"
         disabled={ verifyBtn }
-        onClick={ () => history.push('/meals') }
+        onClick={ handleClick }
       >
         Enter
       </button>

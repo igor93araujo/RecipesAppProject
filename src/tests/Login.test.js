@@ -6,6 +6,8 @@ import renderWithRouter from './helpers/renderWithRouter';
 
 describe('1 - Teste da tela de login', () => {
   it('1.1 - Teste se componentes estã osendo renderizados corretamente', () => {
+    const mockLogin = jest.fn();
+
     renderWithRouter(<App />);
     const emailInput = screen.getByTestId('email-input');
     const passwordInput = screen.getByTestId('password-input');
@@ -22,5 +24,8 @@ describe('1 - Teste da tela de login', () => {
     userEvent.type(emailInput, validEmail);
     userEvent.type(passwordInput, validPass);
     expect(loginButton).toBeEnabled();
+
+    userEvent.click(loginButton);
+    expect(mockLogin).toHaveBeenCalled();
   });
 });

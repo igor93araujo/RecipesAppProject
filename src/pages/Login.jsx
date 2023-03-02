@@ -1,8 +1,39 @@
 import React, { useContext } from 'react';
 import { AppContext } from '../context/AppContext';
 
-function Login() {
-  const { email, password } = useContext(AppContext);
+export default function Login() {
+  const {
+    email,
+    password,
+    setUser,
+    validaEmail,
+    setValidaEmail,
+    validaPassword,
+    setValidaPassword,
+    user,
+  } = useContext(AppContext);
+
+  const verifyEmail = ({ target: { value } }) => {
+    const validEmail = (/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g).test(value);
+    setValidaEmail(validEmail);
+
+    setUser({
+      ...user,
+      email: value,
+    });
+  };
+
+  const verifyPassword = ({ target: { value } }) => {
+    const minLength = 6;
+    const validPass = value.length > minLength;
+    setValidaPassword(validPass);
+    setUser({
+      ...user,
+      password: value,
+    });
+  };
+
+  const verifyBtn = !(validaEmail && validaPassword);
 
   return (
     <>
@@ -11,23 +42,21 @@ function Login() {
         type="email"
         data-testid="email-input"
         value={ email }
-        onChange={ ({ target }) => setUser({ ...user, email: target.value }) }
+        onChange={ verifyEmail }
       />
       <input
         type="password"
         data-testid="password-input"
         value={ password }
-        onChange={ ({ target }) => setUser({ ...user, password: target.value }) }
+        onChange={ verifyPassword }
       />
       <button
         type="button"
         data-testid="login-submit-btn"
-        onClick={ () => console.log('login') }
+        disabled={ verifyBtn }
       >
         Enter
       </button>
     </>
   );
 }
-
-export default Login;

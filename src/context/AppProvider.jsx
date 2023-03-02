@@ -8,7 +8,30 @@ export function AppProvider({ children }) {
     password: '',
   });
 
-  const context = useMemo(() => ({ user, setUser }), [user, setUser]);
+  const [validaEmail, setValidaEmail] = useState(false);
+  const [validaPassword, setValidaPassword] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+
+  const context = useMemo(
+    () => ({
+      user,
+      setUser,
+      validaEmail,
+      setValidaEmail,
+      validaPassword,
+      setValidaPassword,
+      buttonDisabled,
+      setButtonDisabled,
+    }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [
+      user,
+      setUser,
+      validaEmail, setValidaEmail,
+      validaPassword, setValidaPassword,
+      buttonDisabled, setButtonDisabled,
+    ],
+  );
 
   return (
     <AppContext.Provider value={ context }>

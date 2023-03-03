@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { AppContext } from '../../context/AppContext';
-import './styles.css';
+import { AppContext } from '../../../context/AppContext';
+import '../styles.css';
 
 export default function MealsResult() {
   const {

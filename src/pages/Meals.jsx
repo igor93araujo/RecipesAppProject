@@ -1,6 +1,8 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import Header from '../components/Header';
-import MealsResult from '../components/Results';
+import DrinksResult from '../components/Results/Drinks';
+import MealsResult from '../components/Results/Meels';
 import SearchBar from '../components/SearchBar';
 
 import './Meals.css';
@@ -10,7 +12,11 @@ function Meals() {
     <section className="mealsContainer">
       <Header title="Meals" isIconProfile isIconSearch />
       <SearchBar />
-      <MealsResult />
+      {
+        useLocation().pathname === '/meals'
+          ? <MealsResult />
+          : <DrinksResult />
+      }
     </section>
   );
 }

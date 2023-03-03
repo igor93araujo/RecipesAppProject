@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from '../components/Footer/Index';
 import Header from '../components/Header';
 import MealsResult from '../components/Results';
 import SearchBar from '../components/SearchBar';
@@ -11,6 +12,7 @@ function Meals() {
       <Header title="Meals" isIconProfile isIconSearch />
       <SearchBar />
       <MealsResult />
+      <Footer />
     </section>
   );
 }

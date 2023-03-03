@@ -14,6 +14,11 @@ export function AppProvider({ children }) {
 
   const [visibleSearch, setVisibleSearch] = useState(false);
 
+  const [searchType, setSearchType] = useState('');
+  const [searchInput, setSearchInput] = useState('');
+
+  const [mealsArray, setMealsArray] = useState([]);
+
   const context = useMemo(
     () => ({
       user,
@@ -26,6 +31,12 @@ export function AppProvider({ children }) {
       setButtonDisabled,
       visibleSearch,
       setVisibleSearch,
+      searchType,
+      setSearchType,
+      mealsArray,
+      setMealsArray,
+      searchInput,
+      setSearchInput,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
@@ -36,6 +47,12 @@ export function AppProvider({ children }) {
       buttonDisabled, setButtonDisabled,
       visibleSearch,
       setVisibleSearch,
+      searchType,
+      setSearchType,
+      mealsArray,
+      setMealsArray,
+      searchInput,
+      setSearchInput,
     ],
   );
 

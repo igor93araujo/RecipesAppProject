@@ -3,7 +3,46 @@ import { AppContext } from '../../context/AppContext';
 import './styles.css';
 
 export default function SearchBar() {
-  const { visibleSearch } = useContext(AppContext);
+  const {
+    visibleSearch,
+    setSearchType,
+    searchType,
+    setSearchInput,
+    setMealsArray,
+    searchInput,
+  } = useContext(AppContext);
+
+  const handleRadioChange = ({ target }) => {
+    const { value } = target;
+    setSearchType(value);
+  };
+
+  const handleSearchInput = ({ target }) => {
+    const { value } = target;
+    setSearchInput(value);
+  };
+
+  const fetchData = async () => {
+    let endpoint = '';
+    if (searchInput !== '' && searchType !== '') {
+      if (searchType === 'Ingredient') {
+        endpoint = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchInput}`;
+      } else if (searchType === 'Name') {
+        endpoint = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchInput}`;
+      } else {
+        if (searchInput.length > 1) {
+          // eslint-disable-next-line no-alert
+          return alert('Your search must have only 1 (one) character');
+        }
+        endpoint = `https://www.themealdb.com/api/json/v1/1/search.php?f=${searchInput}`;
+      }
+    }
+
+    const fetching = await fetch(endpoint);
+    const data = await fetching.json();
+    setMealsArray(data);
+  };
+
   return (
     <div>
       {
@@ -14,6 +53,7 @@ export default function SearchBar() {
               type="text"
               placeholder="Buscar Receita"
               className="search-input"
+              onChange={ handleSearchInput }
             />
             <div className="radioFilters">
               <div>
@@ -24,6 +64,7 @@ export default function SearchBar() {
                   value="Ingredient"
                   data-testid="ingredient-search-radio"
                   className="search-radio"
+                  onChange={ handleRadioChange }
                 />
                 <label htmlFor="Ingredient">
                   Ingredient
@@ -37,6 +78,7 @@ export default function SearchBar() {
                   value="Name"
                   data-testid="name-search-radio"
                   className="search-radio"
+                  onChange={ handleRadioChange }
                 />
                 <label htmlFor="Name">
                   Name
@@ -50,6 +92,7 @@ export default function SearchBar() {
                   value="firstLetter"
                   data-testid="first-letter-search-radio"
                   className="search-radio"
+                  onChange={ handleRadioChange }
                 />
                 <label htmlFor="firstLetter">
                   First letter
@@ -60,7 +103,7 @@ export default function SearchBar() {
               type="button"
               data-testid="exec-search-btn"
               className="search-button"
-              onClick={ () => {} }
+              onClick={ fetchData }
             >
               Search
             </button>

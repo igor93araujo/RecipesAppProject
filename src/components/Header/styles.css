@@ -1,15 +1,5 @@
 header {
   display: flex;
   justify-content: space-between;
-}
-
-.search-input {
-  border: none;
-  border-bottom: 1px solid #ccc;
-  font-size: 1.2rem;
-  outline: none;
-  padding: 0.5rem;
-  position: absolute;
-  right: 10%;
-  top: 0%;
+  margin-bottom: 1%;
 }

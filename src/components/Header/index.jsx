@@ -28,16 +28,6 @@ function Header({ title, isIconProfile, isIconSearch }) {
         </button>
       )}
       <h1 data-testid="page-title">{title}</h1>
-      {
-        visibleSearch && (
-          <input
-            data-testid="search-input"
-            type="text"
-            placeholder="Buscar Receita"
-            className="search-input"
-          />
-        )
-      }
       { isIconSearch && (
         <button
           type="button"

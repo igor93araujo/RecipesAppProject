@@ -31,8 +31,7 @@ export default function SearchBar() {
         endpoint = `https://www.themealdb.com/api/json/v1/1/search.php?s=${searchInput}`;
       } else {
         if (searchInput.length > 1) {
-          // eslint-disable-next-line no-alert
-          return alert('Your search must have only 1 (one) character');
+          return global.alert('Your search must have only 1 (one) character');
         }
         endpoint = `https://www.themealdb.com/api/json/v1/1/search.php?f=${searchInput}`;
       }

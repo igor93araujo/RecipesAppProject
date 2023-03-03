@@ -7,19 +7,27 @@ export default function MealsResult() {
     mealsArray,
   } = useContext(AppContext);
 
+  const maxElements = 12;
+
   return (
     <div className="mealsResults">
       {
-        mealsArray && mealsArray.meals && mealsArray.meals.map((meal, index) => (
-          <div key={ index } className="meal">
-            <img
-              src={ meal.strMealThumb }
-              alt={ meal.strMeal }
-              data-testid={ `${index}-card-img` }
-            />
-            <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
-          </div>
-        ))
+        mealsArray && mealsArray.meals && mealsArray.meals
+          .slice(0, maxElements)
+          .map((meal, index) => (
+            <div
+              key={ index }
+              className="meal"
+              data-testid={ `${index}-recipe-card` }
+            >
+              <img
+                src={ meal.strMealThumb }
+                alt={ meal.strMeal }
+                data-testid={ `${index}-card-img` }
+              />
+              <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
+            </div>
+          ))
       }
     </div>
   );

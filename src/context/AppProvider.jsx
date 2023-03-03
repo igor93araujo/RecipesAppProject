@@ -19,6 +19,8 @@ export function AppProvider({ children }) {
 
   const [mealsArray, setMealsArray] = useState([]);
 
+  const [isError, setIsError] = useState(false);
+
   const context = useMemo(
     () => ({
       user,
@@ -37,6 +39,8 @@ export function AppProvider({ children }) {
       setMealsArray,
       searchInput,
       setSearchInput,
+      isError,
+      setIsError,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
@@ -53,6 +57,8 @@ export function AppProvider({ children }) {
       setMealsArray,
       searchInput,
       setSearchInput,
+      isError,
+      setIsError,
     ],
   );
 

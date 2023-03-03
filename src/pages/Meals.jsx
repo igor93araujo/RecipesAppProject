@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import Footer from '../components/Footer/Index';
 import Header from '../components/Header';
 import DrinksResult from '../components/Results/Drinks';
 import MealsResult from '../components/Results/Meels';
@@ -17,6 +18,8 @@ function Meals() {
           ? <MealsResult />
           : <DrinksResult />
       }
+      <MealsResult />
+      <Footer />
     </section>
   );
 }

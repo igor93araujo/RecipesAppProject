@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useLocation } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import './styles.css';
 
@@ -40,6 +41,34 @@ export default function SearchBar() {
     const fetching = await fetch(endpoint);
     const data = await fetching.json();
     setMealsArray(data);
+  };
+
+  const fetchDrinks = async () => {
+    let endpoint = '';
+    if (searchInput !== '' && searchType !== '') {
+      if (searchType === 'Ingredient') {
+        endpoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${searchInput}`;
+      } else if (searchType === 'Name') {
+        endpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${searchInput}`;
+      } else {
+        if (searchInput.length > 1) {
+          return global.alert('Your search must have only 1 (one) character');
+        }
+        endpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${searchInput}`;
+      }
+    }
+    const fetching = await fetch(endpoint);
+    const data = await fetching.json();
+    setMealsArray(data);
+  };
+
+  const location = useLocation();
+
+  const handleSearchButton = () => {
+    if (location.pathname === '/meals') {
+      return fetchData();
+    }
+    return fetchDrinks();
   };
 
   return (
@@ -102,7 +131,7 @@ export default function SearchBar() {
               type="button"
               data-testid="exec-search-btn"
               className="search-button"
-              onClick={ fetchData }
+              onClick={ handleSearchButton }
             >
               Search
             </button>

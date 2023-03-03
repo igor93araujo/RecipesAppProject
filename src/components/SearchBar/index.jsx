@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import './styles.css';
 
@@ -23,6 +23,8 @@ export default function SearchBar() {
     setSearchInput(value);
   };
 
+  const history = useHistory();
+
   const fetchData = async () => {
     let endpoint = '';
     if (searchInput !== '' && searchType !== '') {
@@ -40,6 +42,9 @@ export default function SearchBar() {
 
     const fetching = await fetch(endpoint);
     const data = await fetching.json();
+    if (data.meals.length === 1) {
+      return history.push(`/meals/${data.meals[0].idMeal}`);
+    }
     setMealsArray(data);
   };
 
@@ -59,6 +64,9 @@ export default function SearchBar() {
     }
     const fetching = await fetch(endpoint);
     const data = await fetching.json();
+    if (data.drinks.length === 1) {
+      return history.push(`/drinks/${data.drinks[0].idDrink}`);
+    }
     setMealsArray(data);
   };
 

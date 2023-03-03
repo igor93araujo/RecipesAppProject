@@ -8,6 +8,8 @@ import Drinks from './pages/Drinks';
 import Profile from './pages/Profile';
 import DoneReceipes from './pages/DoneReceipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
+import DetailsDrinks from './pages/DatailsDrinks';
+import DetailsMeals from './pages/DetailsMeals';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AppProvider } from './context/AppProvider';
@@ -28,11 +30,19 @@ function App() {
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route exact path="/meals" component={ Meals } />
-        <Route exact path="/meals/:id-da-receita" />
-        <Route exact path="/meals/:id-da-receita/in-progress" />
+        <Route
+          exact
+          path="/meals/:id"
+          render={ (props) => <DetailsMeals { ...props } /> }
+        />
+        <Route exact path="/meals/:id/in-progress" />
         <Route exact path="/drinks" component={ Drinks } />
-        <Route exact path="/drinks/:id-da-receita" />
-        <Route exact path="/drinks/:id-da-receita/in-progress" />
+        <Route
+          exact
+          path="/drinks/:id"
+          render={ (props) => <DetailsDrinks { ...props } /> }
+        />
+        <Route exact path="/drinks/:id/in-progress" />
         <Route exact path="/profile" component={ Profile } />
         <Route exact path="/done-recipes" component={ DoneReceipes } />
         <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />

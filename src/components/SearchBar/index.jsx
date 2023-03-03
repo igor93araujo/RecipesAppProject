@@ -42,9 +42,15 @@ export default function SearchBar() {
 
     const fetching = await fetch(endpoint);
     const data = await fetching.json();
+
+    if (!fetching.ok) {
+      return global.alert('Sorry, we havent found any recipes for these filters');
+    }
+
     if (data.meals.length === 1) {
       return history.push(`/meals/${data.meals[0].idMeal}`);
     }
+
     setMealsArray(data);
   };
 
@@ -64,9 +70,15 @@ export default function SearchBar() {
     }
     const fetching = await fetch(endpoint);
     const data = await fetching.json();
+
+    if (data.results === null) {
+      return global.alert('Sorry, we havent found any recipes for these filters');
+    }
+
     if (data.drinks.length === 1) {
       return history.push(`/drinks/${data.drinks[0].idDrink}`);
     }
+
     setMealsArray(data);
   };
 

@@ -3,9 +3,10 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from './helpers/renderWithRouter';
-import { mockFilterNameMeals } from './helpers/MockMeals/mockFilterNameMeals';
-import { mockLetterMeals } from './helpers/MockMeals/mockLetterMeals';
-import { mockNameMeals } from './helpers/MockMeals/mockNameMeals';
+
+import { mockNameDrinks } from './helpers/MockDrinks/MockNameDrinks';
+import { mockFilterNameDrinks } from './helpers/MockDrinks/MockFilterNameDrinks';
+import { mockLetterDrinks } from './helpers/MockDrinks/MockLetterDrinks';
 
 const inputRadioIngredientTestId = 'ingredient-search-radio';
 const inputRadioNameTestId = 'name-search-radio';
@@ -18,11 +19,11 @@ const footerTestId = 'footer';
 const drinkButtonTestId = 'drinks-bottom-btn';
 const mealButtonTestId = 'meals-bottom-btn';
 
-describe('2 - Teste da tela de comidas', () => {
+describe('2 - Teste da tela de bebidas', () => {
   it('2.1 - Teste se a página renderiza corretamente', () => {
-    renderWithRouter(<App />, ['/meals']);
+    renderWithRouter(<App />, ['/drinks']);
 
-    const pageTitle = screen.getByRole('heading', { name: 'Meals', level: 1 });
+    const pageTitle = screen.getByRole('heading', { name: 'Drinks', level: 1 });
     const searchButton = screen.getByTestId(searchButtonTestId);
     const profileButton = screen.getByTestId(profileButtonTestId);
 
@@ -32,7 +33,7 @@ describe('2 - Teste da tela de comidas', () => {
   });
 
   it('2.2 - Teste ao clicar no icone perfil e redirecionado para pagina profile', () => {
-    renderWithRouter(<App />, ['/meals']);
+    renderWithRouter(<App />, ['/drinks']);
 
     const profileButton = screen.getByTestId(profileButtonTestId);
 
@@ -44,7 +45,7 @@ describe('2 - Teste da tela de comidas', () => {
   });
 
   it('2.3 - Teste ao clicar no icone de busca e redirecionado para pagina de busca', () => {
-    renderWithRouter(<App />, ['/meals']);
+    renderWithRouter(<App />, ['/drinks']);
 
     const searchInput = screen.queryByTestId(inputSearchTestId);
     const radioIngredient = screen.queryByTestId(inputRadioIngredientTestId);
@@ -67,7 +68,7 @@ describe('2 - Teste da tela de comidas', () => {
 });
 
 it('2.4 - Teste se a pagina meals inicia sem nenhum card-img', () => {
-  renderWithRouter(<App />, ['/meals']);
+  renderWithRouter(<App />, ['/drinks']);
 
   const cardMeal = screen.queryAllByTestId(/-card-img/i);
 
@@ -75,7 +76,7 @@ it('2.4 - Teste se a pagina meals inicia sem nenhum card-img', () => {
 });
 
 it('2.5 - Teste se pagina comtem um footer', () => {
-  renderWithRouter(<App />, ['/meals']);
+  renderWithRouter(<App />, ['/drinks']);
 
   const footer = screen.getByTestId(footerTestId);
 
@@ -83,7 +84,7 @@ it('2.5 - Teste se pagina comtem um footer', () => {
 });
 
 it('2.6 - Teste se footer contem 2 icones', () => {
-  renderWithRouter(<App />, ['/meals']);
+  renderWithRouter(<App />, ['/drinks']);
 
   const drinkButton = screen.getByTestId(drinkButtonTestId);
   const mealButton = screen.getByTestId(mealButtonTestId);
@@ -93,7 +94,7 @@ it('2.6 - Teste se footer contem 2 icones', () => {
 });
 
 it('2.7 - Teste se ao clicar nos icones de drink e redirecionado para a pagina correta', () => {
-  renderWithRouter(<App />, ['/meals']);
+  renderWithRouter(<App />, ['/drinks']);
   const mockDrinkFn = jest.fn();
 
   const drinkButton = screen.getByTestId(drinkButtonTestId);
@@ -107,7 +108,7 @@ it('2.7 - Teste se ao clicar nos icones de drink e redirecionado para a pagina c
 });
 
 it('2.8 - Teste se ao clicar nos icones de comidas e redirecionado para a pagina correta', () => {
-  renderWithRouter(<App />, ['/meals']);
+  renderWithRouter(<App />, ['/drinks']);
   const mockMealFn = jest.fn();
 
   const mealButton = screen.getByTestId(mealButtonTestId);
@@ -115,7 +116,7 @@ it('2.8 - Teste se ao clicar nos icones de comidas e redirecionado para a pagina
   waitFor(() => {
     userEvent.click(mealButton);
     expect(mockMealFn).toBeCalledTimes(1);
-    const pageTitle = screen.getByRole('heading', { name: 'Meals', level: 1 });
+    const pageTitle = screen.getByRole('heading', { name: 'Drinks', level: 1 });
     expect(pageTitle).toBeInTheDocument();
   });
 });
@@ -123,7 +124,7 @@ it('2.8 - Teste se ao clicar nos icones de comidas e redirecionado para a pagina
 describe('2.1 - Teste request ingredient', () => {
   beforeEach(() => {
     jest.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve({
-      json: () => Promise.resolve(mockFilterNameMeals),
+      json: () => Promise.resolve(mockFilterNameDrinks),
     }));
   });
 
@@ -132,7 +133,7 @@ describe('2.1 - Teste request ingredient', () => {
   });
 
   it('2.4 - Teste ao digitar um ingredient valido e clicar no botao de busca', async () => {
-    renderWithRouter(<App />, ['/meals']);
+    renderWithRouter(<App />, ['/drinks']);
 
     const searchButton = screen.getByTestId(searchButtonTestId);
 
@@ -166,7 +167,7 @@ describe('2.1 - Teste request ingredient', () => {
 describe('2.2 - Teste request name', () => {
   beforeEach(() => {
     jest.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve({
-      json: () => Promise.resolve(mockNameMeals),
+      json: () => Promise.resolve(mockNameDrinks),
     }));
   });
 
@@ -175,7 +176,7 @@ describe('2.2 - Teste request name', () => {
   });
 
   it('2.5 - Teste ao digitar um nome valido e clicar no botao de busca', async () => {
-    renderWithRouter(<App />, ['/meals']);
+    renderWithRouter(<App />, ['/drinks']);
 
     const searchButton = screen.getByTestId(searchButtonTestId);
 
@@ -209,7 +210,7 @@ describe('2.2 - Teste request name', () => {
 describe('2.3 - Teste request first letter', () => {
   beforeEach(() => {
     jest.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve({
-      json: () => Promise.resolve(mockLetterMeals),
+      json: () => Promise.resolve(mockLetterDrinks),
     }));
   });
 
@@ -218,7 +219,7 @@ describe('2.3 - Teste request first letter', () => {
   });
 
   it('2.6 - Teste ao digitar uma letra valida e clicar no botao de busca', async () => {
-    renderWithRouter(<App />, ['/meals']);
+    renderWithRouter(<App />, ['/drinks']);
 
     const searchButton = screen.getByTestId(searchButtonTestId);
 
@@ -249,7 +250,7 @@ describe('2.3 - Teste request first letter', () => {
   });
 
   it('2.8 - Teste se ao digita mais 1 uma letra deve aparece uma alert com frase \'Your search must have only 1 (one) character\'', async () => {
-    renderWithRouter(<App />, ['/meals']);
+    renderWithRouter(<App />, ['/drinks']);
 
     const searchButton = screen.getByTestId(searchButtonTestId);
 

@@ -1,4 +1,4 @@
-export const mockFilterName = {
+export const mockFilterNameMeals = {
   meals: [
     {
       strMeal: 'Brown Stew Chicken',

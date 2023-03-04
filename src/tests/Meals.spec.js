@@ -18,6 +18,8 @@ const footerTestId = 'footer';
 const drinkButtonTestId = 'drinks-bottom-btn';
 const mealButtonTestId = 'meals-bottom-btn';
 
+global.alert = jest.fn();
+
 describe('2 - Teste da tela de comidas', () => {
   it('2.1 - Teste se a página renderiza corretamente', () => {
     renderWithRouter(<App />, ['/meals']);
@@ -153,8 +155,6 @@ describe('2.1 - Teste request ingredient', () => {
       userEvent.click(radioIngredient);
       userEvent.click(searchButtonData);
 
-      // expect 11 cards random meals
-
       const cardMeal = screen.getAllByTestId(/-card-img/i);
       const cardName = screen.getAllByTestId(/-card-name/i);
       expect(cardMeal).toHaveLength(11);
@@ -195,8 +195,6 @@ describe('2.2 - Teste request name', () => {
       userEvent.type(searchInput, 'Arrabiata');
       userEvent.click(radioName);
       userEvent.click(searchButtonData);
-
-      // expect 1 card random meals
 
       const cardMeal = screen.getAllByTestId(/-card-img/i);
       const cardName = screen.getAllByTestId(/-card-name/i);
@@ -239,8 +237,6 @@ describe('2.3 - Teste request first letter', () => {
       userEvent.click(radioFirstLetter);
       userEvent.click(searchButtonData);
 
-      // expect 11 cards random meals
-
       const cardMeal = screen.getAllByTestId(/-card-img/i);
       const cardName = screen.getAllByTestId(/-card-name/i);
       expect(cardMeal).toHaveLength(4);
@@ -270,10 +266,81 @@ describe('2.3 - Teste request first letter', () => {
       userEvent.click(radioFirstLetter);
       userEvent.click(searchButtonData);
 
-      // expect 11 cards random meals
-
       const alert = screen.getByText('Your search must have only 1 (one) character');
       expect(alert).toBeInTheDocument();
+    });
+  });
+
+  it('2.9 - Teste se ao digita uma palavra errda deve aparece uma alert com frase \'Sorry, we haven\'t found any recipes for these filters.\'', async () => {
+    renderWithRouter(<App />, ['/meals']);
+
+    const searchButton = screen.getByTestId(searchButtonTestId);
+
+    waitFor(async () => {
+      userEvent.click(searchButton);
+      const searchInput = await screen.findByTestId(inputSearchTestId);
+      const radioIngredient = await screen.findByTestId(inputRadioIngredientTestId);
+      const radioName = await screen.findByTestId(inputRadioNameTestId);
+      const radioFirstLetter = await screen.findByTestId(inputRadioFirstLetterTestId);
+      const searchButtonData = await screen.findByTestId(buttonSearchTestId);
+
+      expect(searchInput).toBeInTheDocument();
+      expect(radioIngredient).toBeInTheDocument();
+      expect(radioName).toBeInTheDocument();
+      expect(radioFirstLetter).toBeInTheDocument();
+
+      userEvent.type(searchInput, 'xablau');
+      userEvent.click(radioName);
+      userEvent.click(searchButtonData);
+
+      const alert = screen.getByText('Sorry, we haven\'t found any recipes for these filters.');
+      expect(alert).toBeInTheDocument();
+    });
+  });
+
+  it('2.10 - Teste se ao digita uma receita renderize apenas 12', async () => {
+    renderWithRouter(<App />, ['/meals']);
+
+    const searchButton = screen.getByTestId(searchButtonTestId);
+
+    waitFor(async () => {
+      userEvent.click(searchButton);
+      const searchInput = await screen.findByTestId(inputSearchTestId);
+      const radioIngredient = await screen.findByTestId(inputRadioIngredientTestId);
+      const radioName = await screen.findByTestId(inputRadioNameTestId);
+      const radioFirstLetter = await screen.findByTestId(inputRadioFirstLetterTestId);
+      const searchButtonData = await screen.findByTestId(buttonSearchTestId);
+
+      expect(searchInput).toBeInTheDocument();
+      expect(radioIngredient).toBeInTheDocument();
+      expect(radioName).toBeInTheDocument();
+      expect(radioFirstLetter).toBeInTheDocument();
+
+      userEvent.type(searchInput, 'soup');
+      userEvent.click(radioName);
+      userEvent.click(searchButtonData);
+
+      const cardMeal = screen.getAllByTestId(/-card-img/i);
+      const cardName = screen.getAllByTestId(/-card-name/i);
+      expect(cardMeal).toHaveLength(12);
+      expect(cardName).toHaveLength(12);
+    });
+  });
+
+  it('2.11 - Teste se ao digita uma receita renderize apenas 1 elemento e redirecionada para a pagina de detalhes', async () => {
+    const { history } = renderWithRouter(<App />, ['/meals']);
+
+    waitFor(async () => {
+      const searchInput = await screen.findByTestId(inputSearchTestId);
+      const radioName = await screen.findByTestId(inputRadioNameTestId);
+      const searchButtonData = await screen.findByTestId(buttonSearchTestId);
+
+      userEvent.type(searchInput, 'Arrabiata');
+      userEvent.click(radioName);
+      userEvent.click(searchButtonData);
+
+      expect(history.location.pathname).toBe('/meals/5277');
+      expect(screen.getByRole('heading', { name: /Details Meals/i, level: 1 })).toBeInTheDocument();
     });
   });
 });

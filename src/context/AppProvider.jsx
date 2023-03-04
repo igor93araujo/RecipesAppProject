@@ -11,15 +11,10 @@ export function AppProvider({ children }) {
   const [validaEmail, setValidaEmail] = useState(false);
   const [validaPassword, setValidaPassword] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(true);
-
   const [visibleSearch, setVisibleSearch] = useState(false);
-
   const [searchType, setSearchType] = useState('');
   const [searchInput, setSearchInput] = useState('');
-
   const [mealsArray, setMealsArray] = useState([]);
-
-  const [isError, setIsError] = useState(false);
 
   const context = useMemo(
     () => ({
@@ -39,10 +34,7 @@ export function AppProvider({ children }) {
       setMealsArray,
       searchInput,
       setSearchInput,
-      isError,
-      setIsError,
     }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       user,
       setUser,
@@ -57,8 +49,6 @@ export function AppProvider({ children }) {
       setMealsArray,
       searchInput,
       setSearchInput,
-      isError,
-      setIsError,
     ],
   );
 

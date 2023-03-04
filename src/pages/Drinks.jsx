@@ -14,9 +14,9 @@ function Drinks() {
       <Headers title="Drinks" isIconProfile isIconSearch />
       <SearchBar />
       {
-        useLocation().pathname === '/meals'
-          ? <MealsResult />
-          : <DrinksResult />
+        useLocation().pathname === '/drinks'
+          ? <DrinksResult />
+          : <MealsResult />
       }
       <Footer />
     </section>

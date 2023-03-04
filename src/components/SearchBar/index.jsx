@@ -50,8 +50,7 @@ export default function SearchBar() {
     if (data.meals.length === 1) {
       return history.push(`/meals/${data.meals[0].idMeal}`);
     }
-
-    setMealsArray(data);
+    setMealsArray(data.meals);
   };
 
   const fetchDrinks = async () => {

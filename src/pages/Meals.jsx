@@ -18,7 +18,6 @@ function Meals() {
           ? <MealsResult />
           : <DrinksResult />
       }
-      <MealsResult />
       <Footer />
     </section>
   );

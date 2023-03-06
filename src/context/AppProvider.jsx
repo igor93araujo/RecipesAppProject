@@ -18,6 +18,7 @@ export function AppProvider({ children }) {
   const [searchInput, setSearchInput] = useState('');
 
   const [mealsArray, setMealsArray] = useState([]);
+  const [inicialArray, setInicialArray] = useState([]);
 
   const [isError, setIsError] = useState(false);
 
@@ -41,6 +42,8 @@ export function AppProvider({ children }) {
       setSearchInput,
       isError,
       setIsError,
+      inicialArray,
+      setInicialArray,
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [
@@ -59,6 +62,8 @@ export function AppProvider({ children }) {
       setSearchInput,
       isError,
       setIsError,
+      inicialArray,
+      setInicialArray,
     ],
   );
 

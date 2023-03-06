@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import CategoryList from '../components/CategoryList';
 import Footer from '../components/Footer/Index';
 
 import Headers from '../components/Header';
@@ -13,6 +14,7 @@ function Drinks() {
     <section>
       <Headers title="Drinks" isIconProfile isIconSearch />
       <SearchBar />
+      <CategoryList />
       {
         useLocation().pathname === '/drinks'
           ? <DrinksResult />

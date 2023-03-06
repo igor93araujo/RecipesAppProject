@@ -22,6 +22,9 @@ export function AppProvider({ children }) {
   const [categoryArrayMeals, setCategoryArrayMeals] = useState([]);
   const [categoryArrayDrinks, setCategoryArrayDrinks] = useState([]);
 
+  const [mealsRecomendation, setMealsRecomendation] = useState([]);
+  const [drinksRecomendation, setDrinksRecomendation] = useState([]);
+
   const [isError, setIsError] = useState(false);
 
   const fetchCategoryMeals = useCallback(async () => {
@@ -71,6 +74,10 @@ export function AppProvider({ children }) {
       setCategoryArrayMeals,
       categoryArrayDrinks,
       setCategoryArrayDrinks,
+      mealsRecomendation,
+      setMealsRecomendation,
+      drinksRecomendation,
+      setDrinksRecomendation,
     }),
     [
       user,
@@ -94,6 +101,10 @@ export function AppProvider({ children }) {
       setCategoryArrayMeals,
       categoryArrayDrinks,
       setCategoryArrayDrinks,
+      mealsRecomendation,
+      setMealsRecomendation,
+      drinksRecomendation,
+      setDrinksRecomendation,
     ],
   );
 

@@ -1,3 +1,4 @@
+import React from 'react';
 import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
@@ -31,6 +32,7 @@ export default function DetailsMeals({ match: { params: { id } } }) {
   console.log(detailsMeals[0]);
   console.log(medidas);
 
+export default function DetailsMeals() {
   return (
     <section>
       <h1>Details Meals</h1>
@@ -75,11 +77,3 @@ export default function DetailsMeals({ match: { params: { id } } }) {
     </section>
   );
 }
-
-DetailsMeals.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
-};

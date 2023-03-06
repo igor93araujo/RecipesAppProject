@@ -1,3 +1,4 @@
+import React from 'react';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
@@ -28,6 +29,7 @@ export default function DetailsDrinks({ match: { params: { id } } }) {
     });
   }
 
+export default function DetailsDrinks() {
   return (
     <section>
       <h1>Details Drinks</h1>
@@ -71,11 +73,3 @@ export default function DetailsDrinks({ match: { params: { id } } }) {
     </section>
   );
 }
-
-DetailsDrinks.propTypes = {
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
-};

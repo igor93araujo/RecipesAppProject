@@ -1,14 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { AppContext } from '../../context/AppContext';
+import Carousel from 'react-bootstrap/Carousel';
 
 export default function Recomendations() {
-  const {
-    mealsRecomendation,
-    setMealsRecomendation,
-    drinksRecomendation,
-    setDrinksRecomendation,
-  } = useContext(AppContext);
+  const [mealsRecomendation, setMealsRecomendation] = useState([]);
+  const [drinksRecomendation, setDrinksRecomendation] = useState([]);
 
   const history = useHistory();
 
@@ -33,22 +29,28 @@ export default function Recomendations() {
   }, []);
 
   return (
-    <div>
+    <Carousel fade>
       {
         history.location.pathname.includes('/meals')
-          ? drinksRecomendation && drinksRecomendation.map((meal, index) => (
-            <div key={ index }>
-              <img src={ meal.strMealThumb } alt={ meal.strMeal } />
-              <p data-testid={ `${index}-recomendation-title` }>{ meal.strMeal }</p>
-            </div>
+          ? drinksRecomendation.map((meal, index) => (
+            <Carousel.Item key={ index }>
+              <Carousel.Caption>
+                <p data-testid={ `${index}-recomendation-title` }>{ meal.strDrink }</p>
+              </Carousel.Caption>
+              <img src={ meal.strDrinkThumb } alt={ meal.strMeal } />
+              <img src={ meal.strDrinkThumb } alt={ meal.strMeal } />
+            </Carousel.Item>
           ))
-          : mealsRecomendation && mealsRecomendation.map((drink, index) => (
-            <div key={ index }>
-              <img src={ drink.strDrinkThumb } alt={ drink.strDrink } />
-              <p data-testid={ `${index}-recomendation-title` }>{ drink.strDrink }</p>
-            </div>
+          : mealsRecomendation.map((drink, index) => (
+            <Carousel.Item key={ index }>
+              <Carousel.Caption>
+                <p data-testid={ `${index}-recomendation-title` }>{ drink.strMeal }</p>
+              </Carousel.Caption>
+              <img src={ drink.strMealThumb } alt={ drink.strDrink } />
+              <img src={ drink.strMealThumb } alt={ drink.strDrink } />
+            </Carousel.Item>
           ))
       }
-    </div>
+    </Carousel>
   );
 }

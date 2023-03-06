@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import './styles.css';
@@ -81,7 +81,31 @@ export default function SearchBar() {
     setMealsArray(data);
   };
 
+  const fetchInitialMeals = async () => {
+    const fetching = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const data = await fetching.json();
+    setMealsArray(data.meals);
+  };
+
+  const fetchInitialDrinks = async () => {
+    const fetching = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const data = await fetching.json();
+    setMealsArray(data.drinks);
+  };
+
   const location = useLocation();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleInicialPage = () => {
+    if (location.pathname === '/meals') {
+      return fetchInitialMeals();
+    }
+    return fetchInitialDrinks();
+  };
+
+  useEffect(() => {
+    handleInicialPage();
+  }, [handleInicialPage]);
 
   const handleSearchButton = () => {
     if (location.pathname === '/meals') {

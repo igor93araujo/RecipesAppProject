@@ -6,7 +6,6 @@ export default function DrinksResult() {
 
   const {
     mealsArray,
-    // setMealsArray,
   } = useContext(AppContext);
 
   const maxElements = 12;

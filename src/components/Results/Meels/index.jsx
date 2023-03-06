@@ -21,6 +21,11 @@ export default function MealsResult() {
     fetchInitialMeals();
   }, []);
 
+  const redirectDetails = (target) => {
+    console.log(target);
+    window.location.href = `/meals/${target}`;
+  };
+
   const slicedArr = mealsArray.length === 0
     ? inicialArray : mealsArray.slice(0, maxElements);
 
@@ -33,12 +38,17 @@ export default function MealsResult() {
             className="meal"
             data-testid={ `${index}-recipe-card` }
           >
-            <img
-              src={ meal.strMealThumb }
-              alt={ meal.strMeal }
-              data-testid={ `${index}-card-img` }
-            />
-            <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
+            <button
+              type="button"
+              onClick={ () => redirectDetails(meal.idMeal) }
+            >
+              <img
+                src={ meal.strMealThumb }
+                alt={ meal.strMeal }
+                data-testid={ `${index}-card-img` }
+              />
+              <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
+            </button>
           </div>
         ))
       }

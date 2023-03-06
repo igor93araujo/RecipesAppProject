@@ -28,8 +28,6 @@ export default function DrinksResult() {
   const slicedArr = mealsArray.length === 0
     ? inicialArray : mealsArray.slice(0, maxElements);
 
-  console.log(slicedArr);
-
   return (
     <div className="mealsResults">
       {

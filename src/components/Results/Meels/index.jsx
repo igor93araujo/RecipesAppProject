@@ -1,15 +1,28 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../context/AppContext';
 import '../styles.css';
 
 export default function MealsResult() {
+  const [inicialArray, setInicialArray] = useState([]);
+
   const {
     mealsArray,
   } = useContext(AppContext);
 
   const maxElements = 12;
 
-  const slicedArr = mealsArray && mealsArray.slice(0, maxElements);
+  const fetchInitialMeals = async () => {
+    const fetching = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const data = await fetching.json();
+    setInicialArray(data.meals.slice(0, maxElements));
+  };
+
+  useEffect(() => {
+    fetchInitialMeals();
+  }, []);
+
+  const slicedArr = mealsArray.length === 0
+    ? inicialArray : mealsArray.slice(0, maxElements);
 
   return (
     <div className="mealsResults">

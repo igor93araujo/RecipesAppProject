@@ -1,14 +1,29 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../context/AppContext';
 
 export default function DrinksResult() {
+  const [inicialArray, setInicialArray] = useState([]);
+
   const {
     mealsArray,
+    // setMealsArray,
   } = useContext(AppContext);
 
   const maxElements = 12;
 
-  const slicedArr = mealsArray && mealsArray.slice(0, maxElements);
+  const fetchInitialDrinks = async () => {
+    const fetching = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const data = await fetching.json();
+    setInicialArray(data.drinks.slice(0, maxElements));
+  };
+
+  useEffect(() => {
+    fetchInitialDrinks();
+  }, []);
+
+  const slicedArr = mealsArray.length === 0
+    ? inicialArray : mealsArray.slice(0, maxElements);
+
   return (
     <div className="mealsResults">
       {

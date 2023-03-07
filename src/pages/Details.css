@@ -13,3 +13,7 @@
 .react-player {
   width: 100px;
 }
+
+.favorite img {
+  width: 10px;
+}

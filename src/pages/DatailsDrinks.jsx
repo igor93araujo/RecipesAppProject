@@ -3,8 +3,13 @@ import PropTypes from 'prop-types';
 import Recomendations from '../components/Recomendations';
 import ButtonStartRecipe from '../components/ButtonStartRecipe';
 
+import image from '../images/shareIcon.svg';
+
+const copy = require('clipboard-copy');
+
 export default function DetailsDrinks({ match: { params: { id } } }) {
   const [detailsDrink, setDrinkDetails] = useState([]);
+  const [checkTheLinkCopied, setCheckTheLinkCopied] = useState(false);
 
   const ingredients = [];
   const medidas = [];
@@ -28,6 +33,12 @@ export default function DetailsDrinks({ match: { params: { id } } }) {
       }
     });
   }
+
+  const handleClickShare = () => {
+    const url = window.location.href;
+    copy(url);
+    setCheckTheLinkCopied(true);
+  };
 
   return (
     <section>
@@ -66,12 +77,25 @@ export default function DetailsDrinks({ match: { params: { id } } }) {
                 </ul>
               </div>
               <div>
-                <button type="button" data-testid="share-btn">
-                  Compartilhar
+                <button
+                  type="button"
+                  data-testid="share-btn"
+                  onClick={ () => handleClickShare() }
+                >
+                  <img
+                    src={ image }
+                    alt="img"
+                    style={ { height: '20px', width: '20px' } }
+                  />
                 </button>
                 <button type="button" data-testid="favorite-btn">
                   Favoritar
                 </button>
+                {
+                  !checkTheLinkCopied
+                    ? ''
+                    : <p>Link copied!</p>
+                }
               </div>
             </div>
           )

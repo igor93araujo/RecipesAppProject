@@ -10,6 +10,8 @@ import DoneReceipes from './pages/DoneReceipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import DetailsDrinks from './pages/DatailsDrinks';
 import DetailsMeals from './pages/DetailsMeals';
+import DrinksInProgress from './pages/DrinksInProgress';
+import MealsInProgress from './pages/MealsInProgress';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AppProvider } from './context/AppProvider';
@@ -25,14 +27,22 @@ function App() {
           path="/meals/:id"
           render={ (props) => <DetailsMeals { ...props } /> }
         />
-        <Route exact path="/meals/:id/in-progress" />
+        <Route
+          exact
+          path="/meals/:id/in-progress"
+          render={ (props) => <MealsInProgress { ...props } /> }
+        />
         <Route exact path="/drinks" component={ Drinks } />
         <Route
           exact
           path="/drinks/:id"
           render={ (props) => <DetailsDrinks { ...props } /> }
         />
-        <Route exact path="/drinks/:id/in-progress" />
+        <Route
+          exact
+          path="/drinks/:id/in-progress"
+          render={ (props) => <DrinksInProgress { ...props } /> }
+        />
         <Route exact path="/profile" component={ Profile } />
         <Route exact path="/done-recipes" component={ DoneReceipes } />
         <Route exact path="/favorite-recipes" component={ FavoriteRecipes } />

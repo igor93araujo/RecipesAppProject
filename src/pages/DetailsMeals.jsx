@@ -5,8 +5,13 @@ import Recomendations from '../components/Recomendations';
 import ButtonStartRecipe from '../components/ButtonStartRecipe';
 import './Details.css';
 
+import image from '../images/shareIcon.svg';
+
+const copy = require('clipboard-copy');
+
 export default function DetailsMeals({ match: { params: { id } } }) {
   const [detailsMeals, setDetailsMeals] = useState('');
+  const [checkTheLinkCopied, setCheckTheLinkCopied] = useState(false);
   const [favorite, setFavorite] = useState(false);
 
   const ingredients = [];
@@ -32,6 +37,10 @@ export default function DetailsMeals({ match: { params: { id } } }) {
     });
   }
 
+  const handleClickShare = () => {
+    const url = window.location.href;
+    copy(url);
+    setCheckTheLinkCopied(true);
   const addFavorite = () => {
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (favorites) {
@@ -113,8 +122,16 @@ export default function DetailsMeals({ match: { params: { id } } }) {
                 </ul>
               </div>
               <div>
-                <button type="button" data-testid="share-btn">
-                  Compartilhar
+                <button
+                  type="button"
+                  data-testid="share-btn"
+                  onClick={ () => handleClickShare() }
+                >
+                  <img
+                    src={ image }
+                    alt="img"
+                    style={ { height: '20px', width: '20px' } }
+                  />
                 </button>
                 <button
                   type="button"
@@ -123,6 +140,11 @@ export default function DetailsMeals({ match: { params: { id } } }) {
                 >
                   {favorite ? 'Desfavoritar' : 'Favoritar'}
                 </button>
+                {
+                  !checkTheLinkCopied
+                    ? ''
+                    : <p>Link copied!</p>
+                }
               </div>
             </div>
           )

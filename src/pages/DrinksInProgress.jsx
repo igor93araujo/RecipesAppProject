@@ -4,6 +4,29 @@ import { AppContext } from '../context/AppContext';
 
 export default function DrinksInProgress({ match: { params: { id } } }) {
   const { detailsRecipes, setDetailsRecipes } = useContext(AppContext);
+  
+  // const [inProgressRecipes, setInProgressRecipes] = useState(
+  //   JSON.parse(localStorage.getItem('inProgressRecipes')) || {
+  //     meals: {
+  //       id: [],
+  //     },
+  //     drinks: {
+  //       id: [],
+  //     },
+  //   },
+  // );
+
+  // const saveProgress = () => {
+  //   const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  //   if (inProgressRecipes) {
+  //     const inProgress = inProgressRecipes.meals[id];
+  //     if (inProgress) {
+  //       const newInProgress = inProgressRecipes
+  //         .filter((item) => item.id !== detailsDrink[0].idDrink);
+  //       localStorage.setItem('inProgressRecipes', JSON.stringify(newInProgress));
+  //     }
+  //   }
+  // };
 
   useEffect(() => {
     const fetchDrink = async () => {

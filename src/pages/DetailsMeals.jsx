@@ -22,8 +22,6 @@ export default function DetailsMeals({ match: { params: { id } } }) {
   );
 
   const [checkTheLinkCopied, setCheckTheLinkCopied] = useState(false);
-  const [favorite, setFavorite] = useState(false);
-
 
   const ingredients = [];
   const medidas = [];
@@ -52,6 +50,8 @@ export default function DetailsMeals({ match: { params: { id } } }) {
     const url = window.location.href;
     copy(url);
     setCheckTheLinkCopied(true);
+  };
+
   const addFavorite = () => {
     const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
     if (favorites) {

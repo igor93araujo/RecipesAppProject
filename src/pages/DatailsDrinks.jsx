@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Recomendations from '../components/Recomendations';
+import ButtonStartRecipe from '../components/ButtonStartRecipe';
 
 export default function DetailsDrinks({ match: { params: { id } } }) {
   const [detailsDrink, setDrinkDetails] = useState([]);
@@ -70,6 +71,7 @@ export default function DetailsDrinks({ match: { params: { id } } }) {
           : null
       }
       <Recomendations />
+      <ButtonStartRecipe />
     </section>
   );
 }

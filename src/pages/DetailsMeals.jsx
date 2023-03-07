@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 import Recomendations from '../components/Recomendations';
+import ButtonStartRecipe from '../components/ButtonStartRecipe';
 
 export default function DetailsMeals({ match: { params: { id } } }) {
   const [detailsMeals, setDetailsMeals] = useState('');
@@ -71,6 +72,7 @@ export default function DetailsMeals({ match: { params: { id } } }) {
           : null
       }
       <Recomendations />
+      <ButtonStartRecipe />
     </section>
   );
 }

@@ -2,6 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default function MealsInProgress({ match: { params: { id } } }) {
+  // const [inProgressRecipes, setInProgressRecipes] = useState(
+  //   JSON.parse(localStorage.getItem('inProgressRecipes')) || {
+  //     meals: {
+  //       id: [],
+  //     },
+  //     drinks: {
+  //       id: [],
+  //     },
+  //   },
+  // );
+
+  // const saveProgress = () => {
+  //   const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  //   if (inProgressRecipes) {
+  //     const inProgress = inProgressRecipes.meals[id];
+  //     if (inProgress) {
+  //       const newInProgress = inProgressRecipes
+  //         .filter((item) => item.id !== detailsDrink[0].idDrink);
+  //       localStorage.setItem('inProgressRecipes', JSON.stringify(newInProgress));
+  //     }
+  //   }
+  // };
+
   return (
     <section>
       <h1>MealsInProgress</h1>

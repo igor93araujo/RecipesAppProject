@@ -20,7 +20,7 @@ export default function ButtonStartRecipe({ url, id }) {
       style={ { position: 'fixed', bottom: '0', right: '50%' } }
       onClick={ () => handleClick() }
     >
-      Start Recipe
+      Continue Recipe
     </button>
   );
 }

@@ -10,6 +10,11 @@
   flex-direction: row;
   overflow-x: scroll;
   text-align: center;
+  white-space: nowrap;
+}
+
+.innerCarousel div:nth-child( n+3 ):nth-child( n-6 ) {
+  display: none;
 }
 
 

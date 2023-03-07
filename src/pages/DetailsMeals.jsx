@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 import Recomendations from '../components/Recomendations';
+import './Details.css';
 
 export default function DetailsMeals({ match: { params: { id } } }) {
   const [detailsMeals, setDetailsMeals] = useState('');
@@ -30,12 +31,12 @@ export default function DetailsMeals({ match: { params: { id } } }) {
   }
 
   return (
-    <section>
+    <section className="fullSection">
       <h1>Details Meals</h1>
       {
         detailsMeals.length > 0
           ? (
-            <div>
+            <div className="itemDetail">
               <img
                 src={ detailsMeals[0].strMealThumb }
                 alt={ detailsMeals[0].strMeal }
@@ -44,7 +45,14 @@ export default function DetailsMeals({ match: { params: { id } } }) {
               <h1 data-testid="recipe-title">{ detailsMeals[0].strMeal }</h1>
               <p data-testid="recipe-category">{ detailsMeals[0].strCategory }</p>
               <p data-testid="instructions">{ detailsMeals[0].strInstructions }</p>
-              <ReactPlayer url={ detailsMeals[0].strYoutube } data-testid="video" />
+              <div
+                className="react-player"
+              >
+                <ReactPlayer
+                  url={ detailsMeals[0].strYoutube }
+                  data-testid="video"
+                />
+              </div>
               <div>
                 <ul>
                   {

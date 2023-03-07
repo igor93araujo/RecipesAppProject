@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 
@@ -8,49 +8,67 @@ function CategoryList() {
     categoryArrayDrinks,
     setMealsArray,
   } = useContext(AppContext);
+  const [isClicked, setIsClicked] = useState('');
   const location = useLocation();
 
   const handleClick = async (category) => {
-    switch (category) {
-    case 'All':
+    if (!isClicked || isClicked !== category) {
       if (location.pathname === '/meals') {
-        const url = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-        const data = await url.json();
-        return setMealsArray(data.meals);
+        const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
+        const data = await response.json();
+        setMealsArray(data.meals);
       }
 
       if (location.pathname === '/drinks') {
-        const url = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-        const data = await url.json();
-        return setMealsArray(data.drinks);
-      }
-      break;
-    default:
-      if (location.pathname === '/meals') {
-        const mealsByCategory = categoryArrayMeals
-          .filter((meal) => meal.strCategory === category);
-        const url = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${mealsByCategory[0].strCategory}`);
-        const data = await url.json();
-        const limit = 12;
-        const meals = data.meals.slice(0, limit);
-        return setMealsArray(meals);
+        const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`);
+        const data = await response.json();
+        setMealsArray(data.drinks);
       }
 
-      if (location.pathname === '/drinks') {
-        const drinksByCategory = categoryArrayDrinks
-          .filter((drink) => drink.strCategory === category);
-        const url = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${drinksByCategory[0].strCategory}`);
-        const data = await url.json();
-        return setMealsArray(data.drinks);
-      }
-      break;
+      setIsClicked(category);
     }
+
+    if (isClicked === category) {
+      if (location.pathname === '/meals') {
+        const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+        const limit = 12;
+        const data = await response.json();
+        setMealsArray(data.meals.slice(0, limit));
+      }
+
+      if (location.pathname === '/drinks') {
+        const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+        const limit = 12;
+        const data = await response.json();
+        setMealsArray(data.drinks.slice(0, limit));
+      }
+
+      setIsClicked('');
+    }
+  };
+
+  const handleClickAll = async () => {
+    if (location.pathname === '/meals') {
+      const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      const limit = 12;
+      const data = await response.json();
+      setMealsArray(data.meals.slice(0, limit));
+    }
+
+    if (location.pathname === '/drinks') {
+      const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      const limit = 12;
+      const data = await response.json();
+      setMealsArray(data.drinks.slice(0, limit));
+    }
+
+    setIsClicked('');
   };
 
   return (
     <div>
       { location.pathname === '/meals'
-        ? categoryArrayMeals.map((meal, index) => (
+        ? categoryArrayMeals && categoryArrayMeals.map((meal, index) => (
           <button
             key={ index }
             type="button"
@@ -60,7 +78,7 @@ function CategoryList() {
             {meal.strCategory}
           </button>
         ))
-        : categoryArrayDrinks.map((drink, index) => (
+        : categoryArrayDrinks && categoryArrayDrinks.map((drink, index) => (
           <button
             key={ index }
             type="button"
@@ -73,7 +91,7 @@ function CategoryList() {
       <button
         type="button"
         data-testid="All-category-filter"
-        onClick={ () => handleClick('All') }
+        onClick={ () => handleClickAll() }
       >
         All
       </button>

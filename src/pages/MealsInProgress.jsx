@@ -83,7 +83,7 @@ export default function MealsInProgress({ match: { params: { id } } }) {
       </div>
     );
   }
-  
+
   return (
     <section>
       <h1>MealsInProgress</h1>

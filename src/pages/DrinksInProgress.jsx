@@ -4,7 +4,7 @@ import { AppContext } from '../context/AppContext';
 
 export default function DrinksInProgress({ match: { params: { id } } }) {
   const { detailsRecipes, setDetailsRecipes } = useContext(AppContext);
-  
+
   // const [inProgressRecipes, setInProgressRecipes] = useState(
   //   JSON.parse(localStorage.getItem('inProgressRecipes')) || {
   //     meals: {
@@ -36,6 +36,10 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
     fetchDrink();
   }, [id, setDetailsRecipes]);
 
+  useEffect(() => {
+    console.log(detailsRecipes);
+  }, []);
+
   function details() {
     const limit = 8;
     const result = [];
@@ -58,6 +62,11 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
       strInstructions,
     } = detailsRecipes[0];
 
+    const doneSteps = ({ target }) => {
+      const { value } = target;
+      console.log(value);
+    };
+
     return (
       <div>
         <h1 data-testid="recipe-title">{strDrink}</h1>
@@ -69,12 +78,17 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
             <label
               htmlFor={ `${index}-ingredient-step` }
               data-testid={ `${index}-ingredient-step` }
+              id={ `${index}-ingredient-step` }
             >
               {item.ingredient}
               -
               {item.measure}
               <input
                 type="checkbox"
+                data-testid={ `${index}-ingredient-step` }
+                value={ item.ingredient }
+                id={ `${index}-ingredient-step` }
+                onChange={ (e) => doneSteps(e) }
               />
             </label>
           </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 import Recomendations from '../components/Recomendations';
+import ButtonStartRecipe from '../components/ButtonStartRecipe';
 import './Details.css';
 
 export default function DetailsMeals({ match: { params: { id } } }) {
@@ -79,6 +80,7 @@ export default function DetailsMeals({ match: { params: { id } } }) {
           : null
       }
       <Recomendations />
+      <ButtonStartRecipe />
     </section>
   );
 }

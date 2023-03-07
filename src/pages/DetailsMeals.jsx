@@ -2,12 +2,19 @@ import React, { useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 import Recomendations from '../components/Recomendations';
-import ButtonStartRecipe from '../components/ButtonStartRecipe';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+
 import './Details.css';
+import ButtonStartRecipe from '../components/ButtonStartRecipe';
 
 export default function DetailsMeals({ match: { params: { id } } }) {
   const [detailsMeals, setDetailsMeals] = useState('');
-  const [favorite, setFavorite] = useState(false);
+  const [favorite, setFavorite] = useState(
+    JSON.parse(localStorage.getItem('favoriteRecipes')) !== null
+      ? JSON.parse(localStorage.getItem('favoriteRecipes'))
+        .some((item) => item.id === id) : false,
+  );
 
   const ingredients = [];
   const medidas = [];
@@ -118,10 +125,14 @@ export default function DetailsMeals({ match: { params: { id } } }) {
                 </button>
                 <button
                   type="button"
-                  data-testid="favorite-btn"
                   onClick={ addFavorite }
+                  className="favorite"
                 >
-                  {favorite ? 'Desfavoritar' : 'Favoritar'}
+                  <img
+                    data-testid="favorite-btn"
+                    src={ favorite ? blackHeartIcon : whiteHeartIcon }
+                    alt="favorite"
+                  />
                 </button>
               </div>
             </div>

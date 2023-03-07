@@ -3,9 +3,6 @@ import { useHistory } from 'react-router-dom';
 
 export default function ButtonStartRecipe({ url, id }) {
   const history = useHistory();
-
-  console.log(url);
-
   const handleClick = () => {
     if (url === 'drinks') {
       console.log(id);

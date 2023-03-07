@@ -5,6 +5,7 @@ import ButtonStartRecipe from '../components/ButtonStartRecipe';
 
 export default function DetailsDrinks({ match: { params: { id } } }) {
   const [detailsDrink, setDrinkDetails] = useState([]);
+  const [favorite, setFavorite] = useState(false);
 
   const ingredients = [];
   const medidas = [];
@@ -28,6 +29,36 @@ export default function DetailsDrinks({ match: { params: { id } } }) {
       }
     });
   }
+
+  const addFavorite = () => {
+    const newFavorite = {
+      id: detailsDrink[0].idDrink,
+      type: 'drink',
+      nationality: '',
+      category: detailsDrink[0].strCategory,
+      alcoholicOrNot: detailsDrink[0].strAlcoholic,
+      name: detailsDrink[0].strDrink,
+      image: detailsDrink[0].strDrinkThumb,
+    };
+
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (favorites) {
+      const isFavorite = favorites.some((item) => item.id === detailsDrink[0].idDrink);
+      if (isFavorite) {
+        const newFavorites = favorites
+          .filter((item) => item.id !== detailsDrink[0].idDrink);
+        localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
+        setFavorite(false);
+      } else {
+        localStorage
+          .setItem('favoriteRecipes', JSON.stringify([...favorites, newFavorite]));
+        setFavorite(true);
+      }
+    } else {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([newFavorite]));
+      setFavorite(true);
+    }
+  };
 
   return (
     <section>
@@ -69,8 +100,12 @@ export default function DetailsDrinks({ match: { params: { id } } }) {
                 <button type="button" data-testid="share-btn">
                   Compartilhar
                 </button>
-                <button type="button" data-testid="favorite-btn">
-                  Favoritar
+                <button
+                  type="button"
+                  data-testid="favorite-btn"
+                  onClick={ () => addFavorite() }
+                >
+                  { favorite ? 'Desfavoritar' : 'Favoritar' }
                 </button>
               </div>
             </div>

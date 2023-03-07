@@ -7,6 +7,7 @@ import './Details.css';
 
 export default function DetailsMeals({ match: { params: { id } } }) {
   const [detailsMeals, setDetailsMeals] = useState('');
+  const [favorite, setFavorite] = useState(false);
 
   const ingredients = [];
   const medidas = [];
@@ -30,6 +31,42 @@ export default function DetailsMeals({ match: { params: { id } } }) {
       }
     });
   }
+
+  const addFavorite = () => {
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (favorites) {
+      const isFavorite = favorites.some((item) => item.id === detailsMeals[0].idMeal);
+      if (isFavorite) {
+        const newFavorites = favorites
+          .filter((item) => item.id !== detailsMeals[0].idMeal);
+        localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
+        setFavorite(false);
+      } else {
+        const newFavorite = {
+          id: detailsMeals[0].idMeal,
+          type: 'meal',
+          alcoholicOrNot: detailsMeals[0].strAlcoholic,
+          name: detailsMeals[0].strMeal,
+          image: detailsMeals[0].strMealThumb,
+        };
+        localStorage
+          .setItem('favoriteRecipes', JSON.stringify([...favorites, newFavorite]));
+        setFavorite(true);
+      }
+    } else {
+      const newFavorite = {
+        id: detailsMeals[0].idMeal,
+        type: 'meal',
+        nationality: detailsMeals[0].strArea,
+        category: detailsMeals[0].strCategory,
+        alcoholicOrNot: '',
+        name: detailsMeals[0].strMeal,
+        image: detailsMeals[0].strMealThumb,
+      };
+      localStorage.setItem('favoriteRecipes', JSON.stringify([newFavorite]));
+      setFavorite(true);
+    }
+  };
 
   return (
     <section className="fullSection">
@@ -79,8 +116,12 @@ export default function DetailsMeals({ match: { params: { id } } }) {
                 <button type="button" data-testid="share-btn">
                   Compartilhar
                 </button>
-                <button type="button" data-testid="favorite-btn">
-                  Favoritar
+                <button
+                  type="button"
+                  data-testid="favorite-btn"
+                  onClick={ addFavorite }
+                >
+                  {favorite ? 'Desfavoritar' : 'Favoritar'}
                 </button>
               </div>
             </div>

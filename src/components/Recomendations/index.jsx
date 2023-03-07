@@ -23,10 +23,6 @@ export default function Recomendations() {
   };
 
   useEffect(() => {
-    console.log(drinksRecomendation);
-  }, [drinksRecomendation]);
-
-  useEffect(() => {
     if (history.location.pathname.includes('/meals')) {
       fetchDrinksRecomendations();
     } else {
@@ -65,6 +61,7 @@ export default function Recomendations() {
               : mealsRecomendation.map((meal, index) => (
                 <div
                   key={ index }
+                  data-testid={ `${index}-recommendation-card` }
                 >
                   <div className="item-title">
                     <p

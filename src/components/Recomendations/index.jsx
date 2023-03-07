@@ -47,13 +47,13 @@ export default function Recomendations() {
               ? drinksRecomendation.map((meal, index) => (
                 <div
                   key={ index }
-                  data-testid={ `${index}-recomendation-card` }
+                  data-testid={ `${index}-recommendation-card` }
                 >
                   <div
                     className="item-title"
                   >
                     <p
-                      data-testid={ `${index}-recomendation-title` }
+                      data-testid={ `${index}-recommendation-title` }
                     >
                       { meal.strDrink }
 
@@ -68,7 +68,7 @@ export default function Recomendations() {
                 >
                   <div className="item-title">
                     <p
-                      data-testid={ `${index}-recomendation-title` }
+                      data-testid={ `${index}-recommendation-title` }
                     >
                       { meal.strMeal }
 

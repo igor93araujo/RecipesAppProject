@@ -10,6 +10,7 @@ const copy = require('clipboard-copy');
 export default function DetailsDrinks({ match: { params: { id } } }) {
   const [detailsDrink, setDrinkDetails] = useState([]);
   const [checkTheLinkCopied, setCheckTheLinkCopied] = useState(false);
+  const [favorite, setFavorite] = useState(false);
 
   const ingredients = [];
   const medidas = [];
@@ -38,6 +39,34 @@ export default function DetailsDrinks({ match: { params: { id } } }) {
     const url = window.location.href;
     copy(url);
     setCheckTheLinkCopied(true);
+  const addFavorite = () => {
+    const newFavorite = {
+      id: detailsDrink[0].idDrink,
+      type: 'drink',
+      nationality: '',
+      category: detailsDrink[0].strCategory,
+      alcoholicOrNot: detailsDrink[0].strAlcoholic,
+      name: detailsDrink[0].strDrink,
+      image: detailsDrink[0].strDrinkThumb,
+    };
+
+    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (favorites) {
+      const isFavorite = favorites.some((item) => item.id === detailsDrink[0].idDrink);
+      if (isFavorite) {
+        const newFavorites = favorites
+          .filter((item) => item.id !== detailsDrink[0].idDrink);
+        localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
+        setFavorite(false);
+      } else {
+        localStorage
+          .setItem('favoriteRecipes', JSON.stringify([...favorites, newFavorite]));
+        setFavorite(true);
+      }
+    } else {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([newFavorite]));
+      setFavorite(true);
+    }
   };
 
   return (
@@ -88,8 +117,12 @@ export default function DetailsDrinks({ match: { params: { id } } }) {
                     style={ { height: '20px', width: '20px' } }
                   />
                 </button>
-                <button type="button" data-testid="favorite-btn">
-                  Favoritar
+                <button
+                  type="button"
+                  data-testid="favorite-btn"
+                  onClick={ () => addFavorite() }
+                >
+                  { favorite ? 'Desfavoritar' : 'Favoritar' }
                 </button>
                 {
                   !checkTheLinkCopied

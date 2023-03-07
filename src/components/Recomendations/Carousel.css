@@ -1,7 +1,8 @@
 .carousel {
-  margin: 0 10%;
-  margin-bottom: 10%;
-  width: 430px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  max-width: 400px;
 }
 
 .innerCarousel {
@@ -9,11 +10,9 @@
   flex-direction: row;
   overflow-x: scroll;
   text-align: center;
-  width: 100%;
 }
 
 
 .carousel img {
-  margin-right: 1rem;
   width: 200px;
 }

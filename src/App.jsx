@@ -16,16 +16,6 @@ import { AppProvider } from './context/AppProvider';
 
 function App() {
   return (
-    // <div className="meals">
-    //   <span className="logo">TRYBE</span>
-    //   <object
-    //     className="rocksGlass"
-    //     type="image/svg+xml"
-    //     data={ rockGlass }
-    //   >
-    //     Glass
-    //   </object>
-    // </div>
     <AppProvider>
       <Switch>
         <Route exact path="/" component={ Login } />

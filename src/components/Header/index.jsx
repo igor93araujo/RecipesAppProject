@@ -10,9 +10,6 @@ function Header({ title, isIconProfile, isIconSearch }) {
   const history = useHistory();
   const { visibleSearch, setVisibleSearch } = useContext(AppContext);
 
-  const handleClick = () => {
-    setVisibleSearch(!visibleSearch);
-  };
   return (
     <header>
       { isIconProfile && (
@@ -31,7 +28,7 @@ function Header({ title, isIconProfile, isIconSearch }) {
       { isIconSearch && (
         <button
           type="button"
-          onClick={ handleClick }
+          onClick={ () => setVisibleSearch(!visibleSearch) }
         >
           <img
             data-testid="search-top-btn"

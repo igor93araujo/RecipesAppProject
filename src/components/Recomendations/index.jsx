@@ -23,6 +23,10 @@ export default function Recomendations() {
   };
 
   useEffect(() => {
+    console.log(drinksRecomendation);
+  }, [drinksRecomendation]);
+
+  useEffect(() => {
     if (history.location.pathname.includes('/meals')) {
       fetchDrinksRecomendations();
     } else {
@@ -36,6 +40,7 @@ export default function Recomendations() {
       <div className="carousel">
         <div
           className="innerCarousel"
+          data-testid="recomendations"
         >
           {
             history.location.pathname.includes('/meals')

@@ -75,12 +75,20 @@ export default function DetailsMeals({ match: { params: { id } } }) {
                   }
                 </ul>
               </div>
+              <div>
+                <button type="button" data-testid="share-btn">
+                  Compartilhar
+                </button>
+                <button type="button" data-testid="favorite-btn">
+                  Favoritar
+                </button>
+              </div>
             </div>
           )
           : null
       }
       <Recomendations />
-      <ButtonStartRecipe />
+      <ButtonStartRecipe url="meals" id={ id } />
     </section>
   );
 }

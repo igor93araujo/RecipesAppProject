@@ -1,0 +1,19 @@
+.carousel {
+  margin: 0 10%;
+  margin-bottom: 10%;
+  width: 430px;
+}
+
+.innerCarousel {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  text-align: center;
+  width: 100%;
+}
+
+
+.carousel img {
+  margin-right: 1rem;
+  width: 200px;
+}

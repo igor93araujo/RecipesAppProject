@@ -16,7 +16,6 @@ export default function DetailsDrinks({ match: { params: { id } } }) {
   }, [id]);
 
   const obj = detailsDrink[0];
-  console.log(obj);
   if (obj !== undefined) {
     Object.keys(obj).forEach((key) => {
       if (key.startsWith('strIngredient')) {

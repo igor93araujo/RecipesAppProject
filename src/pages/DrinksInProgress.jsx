@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { AppContext } from '../context/AppContext';
+import './Progress.css';
 
 export default function DrinksInProgress({ match: { params: { id } } }) {
   const { detailsRecipes, setDetailsRecipes } = useContext(AppContext);
@@ -36,10 +37,6 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
     fetchDrink();
   }, [id, setDetailsRecipes]);
 
-  useEffect(() => {
-    console.log(detailsRecipes);
-  }, []);
-
   function details() {
     const limit = 8;
     const result = [];
@@ -47,7 +44,7 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
       const ingredient = `strIngredient${i}`;
       const measure = `strMeasure${i}`;
       if (detailsRecipes[0][ingredient] !== null
-          && detailsRecipes[0][ingredient] !== '') {
+        && detailsRecipes[0][ingredient] !== '') {
         result.push({
           ingredient: detailsRecipes[0][ingredient],
           measure: detailsRecipes[0][measure],
@@ -62,9 +59,11 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
       strInstructions,
     } = detailsRecipes[0];
 
-    const doneSteps = ({ target }) => {
-      const { value } = target;
-      console.log(value);
+    const doneStep = ({ target }) => {
+      const done = target.parentNode;
+      const ingredient = target.value;
+      console.log(ingredient);
+      done.classList.toggle('done');
     };
 
     return (
@@ -80,15 +79,16 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
               data-testid={ `${index}-ingredient-step` }
               id={ `${index}-ingredient-step` }
             >
-              {item.ingredient}
-              -
-              {item.measure}
+              <span>
+                {item.ingredient}
+                -
+                {item.measure}
+              </span>
               <input
                 type="checkbox"
-                data-testid={ `${index}-ingredient-step` }
                 value={ item.ingredient }
-                id={ `${index}-ingredient-step` }
-                onChange={ (e) => doneSteps(e) }
+                data-testid={ `${index}-ingredient-step` }
+                onChange={ (e) => doneStep(e) }
               />
             </label>
           </div>

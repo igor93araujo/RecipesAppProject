@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { AppContext } from '../context/AppContext';
+import './Progress.css';
 
 export default function MealsInProgress({ match: { params: { id } } }) {
   const { detailsRecipes, setDetailsRecipes } = useContext(AppContext);
@@ -57,6 +58,13 @@ export default function MealsInProgress({ match: { params: { id } } }) {
       strInstructions,
     } = detailsRecipes[0];
 
+    const doneStep = ({ target }) => {
+      const done = target.parentNode;
+      const ingredient = target.value;
+      console.log(ingredient);
+      done.classList.toggle('done');
+    };
+
     return (
       <div>
         <h1 data-testid="recipe-title">{strMeal}</h1>
@@ -74,6 +82,9 @@ export default function MealsInProgress({ match: { params: { id } } }) {
               {item.measure}
               <input
                 type="checkbox"
+                id={ `${index}-ingredient-step` }
+                value={ item.ingredient }
+                onChange={ (e) => doneStep(e) }
               />
             </label>
           </div>

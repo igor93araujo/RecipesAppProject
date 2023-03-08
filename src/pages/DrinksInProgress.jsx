@@ -1,9 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 
 export default function DrinksInProgress({ match: { params: { id } } }) {
   const { detailsRecipes, setDetailsRecipes } = useContext(AppContext);
+
+  const history = useHistory();
 
   const [inProgress, setInProgress] = useState(
     JSON.parse(localStorage.getItem('inProgressRecipes')) || {
@@ -109,7 +112,11 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
       <button type="button" data-testid="favorite-btn">
         Favorite
       </button>
-      <button type="button" data-testid="finish-recipe-btn">
+      <button
+        type="button"
+        data-testid="finish-recipe-btn"
+        onClick={ () => history.push('/done-recipes') }
+      >
         Finish Recipe
       </button>
     </section>

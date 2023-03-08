@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 
 export default function MealsInProgress({ match: { params: { id } } }) {
@@ -12,19 +13,21 @@ export default function MealsInProgress({ match: { params: { id } } }) {
     },
   );
 
+  const history = useHistory();
+
   const doneStep = ({ target }) => {
     const ingredient = target.value;
 
     if (target.checked) {
-      if (!inProgress.drinks[id]) {
-        inProgress.drinks[id] = [ingredient];
+      if (!inProgress.meals[id]) {
+        inProgress.meals[id] = [ingredient];
       } else {
-        inProgress.drinks[id].push(ingredient);
+        inProgress.meals[id].push(ingredient);
       }
     }
 
     if (!target.checked) {
-      inProgress.drinks[id] = inProgress.drinks[id].filter((item) => item !== ingredient);
+      inProgress.meals[id] = inProgress.meals[id].filter((item) => item !== ingredient);
     }
 
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgress));
@@ -73,8 +76,8 @@ export default function MealsInProgress({ match: { params: { id } } }) {
             <label
               htmlFor={ `${index}-ingredient-step` }
               data-testid={ `${index}-ingredient-step` }
-              className={ inProgress.drinks[id]
-                && inProgress.drinks[id].includes(item.ingredient) ? 'done' : '' }
+              className={ inProgress.meals[id]
+                && inProgress.meals[id].includes(item.ingredient) ? 'done' : '' }
             >
               {item.ingredient}
               -
@@ -84,8 +87,8 @@ export default function MealsInProgress({ match: { params: { id } } }) {
                 id={ `${index}-ingredient-step` }
                 value={ item.ingredient }
                 onChange={ (e) => doneStep(e) }
-                checked={ inProgress.drinks[id]
-                  && inProgress.drinks[id].includes(item.ingredient) }
+                checked={ inProgress.meals[id]
+                  && inProgress.meals[id].includes(item.ingredient) }
               />
             </label>
           </div>
@@ -106,7 +109,11 @@ export default function MealsInProgress({ match: { params: { id } } }) {
       <button type="button" data-testid="favorite-btn">
         Favorite
       </button>
-      <button type="button" data-testid="finish-recipe-btn">
+      <button
+        type="button"
+        data-testid="finish-recipe-btn"
+        onClick={ () => history.push('/done-recipes') }
+      >
         Finish Recipe
       </button>
     </section>

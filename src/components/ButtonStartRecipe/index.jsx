@@ -5,7 +5,6 @@ export default function ButtonStartRecipe({ url, id }) {
   const history = useHistory();
   const handleClick = () => {
     if (url === 'drinks') {
-      console.log(id);
       history.push(`/drinks/${id}/in-progress`);
     } else if (url === 'meals') {
       console.log('meals');

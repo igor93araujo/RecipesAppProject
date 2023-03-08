@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { AppContext } from '../context/AppContext';
 import './Progress.css';
@@ -6,28 +6,41 @@ import './Progress.css';
 export default function DrinksInProgress({ match: { params: { id } } }) {
   const { detailsRecipes, setDetailsRecipes } = useContext(AppContext);
 
-  // const [inProgressRecipes, setInProgressRecipes] = useState(
-  //   JSON.parse(localStorage.getItem('inProgressRecipes')) || {
-  //     meals: {
-  //       id: [],
-  //     },
-  //     drinks: {
-  //       id: [],
-  //     },
-  //   },
-  // );
+  const [inProgress, setInProgress] = useState(
+    JSON.parse(localStorage.getItem('inProgressRecipes')) || {
+      meals: {
+        0: [],
+      },
+      drinks: {
+        0: [],
+      },
+    },
+  );
 
-  // const saveProgress = () => {
-  //   const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-  //   if (inProgressRecipes) {
-  //     const inProgress = inProgressRecipes.meals[id];
-  //     if (inProgress) {
-  //       const newInProgress = inProgressRecipes
-  //         .filter((item) => item.id !== detailsDrink[0].idDrink);
-  //       localStorage.setItem('inProgressRecipes', JSON.stringify(newInProgress));
-  //     }
-  //   }
-  // };
+  const doneStep = ({ target }) => {
+    const done = target.parentNode;
+    const ingredient = target.value;
+
+    done.classList.toggle('done');
+    if (done.classList.contains('done')) {
+      console.log(ingredient);
+      setInProgress({
+        ...inProgress,
+        drinks: {
+          ...inProgress.drinks,
+          [detailsRecipes[0].idDrink]: [...inProgress.drinks[id], ingredient],
+        },
+      });
+    } else {
+      setInProgress({
+        ...inProgress,
+        drinks: {
+          ...inProgress.drinks,
+          [id]: inProgress.drinks[id].filter((item) => item !== ingredient),
+        },
+      });
+    }
+  };
 
   useEffect(() => {
     const fetchDrink = async () => {
@@ -58,13 +71,6 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
       strDrinkThumb,
       strInstructions,
     } = detailsRecipes[0];
-
-    const doneStep = ({ target }) => {
-      const done = target.parentNode;
-      const ingredient = target.value;
-      console.log(ingredient);
-      done.classList.toggle('done');
-    };
 
     return (
       <div>

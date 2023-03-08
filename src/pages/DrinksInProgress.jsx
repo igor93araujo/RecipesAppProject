@@ -1,45 +1,35 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { AppContext } from '../context/AppContext';
-import './Progress.css';
 
 export default function DrinksInProgress({ match: { params: { id } } }) {
   const { detailsRecipes, setDetailsRecipes } = useContext(AppContext);
 
   const [inProgress, setInProgress] = useState(
     JSON.parse(localStorage.getItem('inProgressRecipes')) || {
-      meals: {
-        0: [],
-      },
-      drinks: {
-        0: [],
-      },
+      drinks: {},
+      meals: {},
     },
   );
 
   const doneStep = ({ target }) => {
-    const done = target.parentNode;
     const ingredient = target.value;
 
-    done.classList.toggle('done');
-    if (done.classList.contains('done')) {
-      console.log(ingredient);
-      setInProgress({
-        ...inProgress,
-        drinks: {
-          ...inProgress.drinks,
-          [detailsRecipes[0].idDrink]: [...inProgress.drinks[id], ingredient],
-        },
-      });
-    } else {
-      setInProgress({
-        ...inProgress,
-        drinks: {
-          ...inProgress.drinks,
-          [id]: inProgress.drinks[id].filter((item) => item !== ingredient),
-        },
-      });
+    if (target.checked) {
+      if (!inProgress.drinks[id]) {
+        inProgress.drinks[id] = [ingredient];
+      } else {
+        inProgress.drinks[id].push(ingredient);
+      }
     }
+
+    if (!target.checked) {
+      inProgress.drinks[id] = inProgress.drinks[id].filter((item) => item !== ingredient);
+    }
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgress));
+
+    setInProgress(JSON.parse(localStorage.getItem('inProgressRecipes')));
   };
 
   useEffect(() => {
@@ -84,6 +74,8 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
               htmlFor={ `${index}-ingredient-step` }
               data-testid={ `${index}-ingredient-step` }
               id={ `${index}-ingredient-step` }
+              className={ inProgress.drinks[id]
+                && inProgress.drinks[id].includes(item.ingredient) ? 'done' : '' }
             >
               <span>
                 {item.ingredient}
@@ -95,6 +87,8 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
                 value={ item.ingredient }
                 data-testid={ `${index}-ingredient-step` }
                 onChange={ (e) => doneStep(e) }
+                checked={ inProgress.drinks[id]
+                  && inProgress.drinks[id].includes(item.ingredient) }
               />
             </label>
           </div>

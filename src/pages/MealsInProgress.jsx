@@ -1,32 +1,36 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { AppContext } from '../context/AppContext';
-import './Progress.css';
 
 export default function MealsInProgress({ match: { params: { id } } }) {
   const { detailsRecipes, setDetailsRecipes } = useContext(AppContext);
-  // const [inProgressRecipes, setInProgressRecipes] = useState(
-  //   JSON.parse(localStorage.getItem('inProgressRecipes')) || {
-  //     meals: {
-  //       id: [],
-  //     },
-  //     drinks: {
-  //       id: [],
-  //     },
-  //   },
-  // );
 
-  // const saveProgress = () => {
-  //   const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-  //   if (inProgressRecipes) {
-  //     const inProgress = inProgressRecipes.meals[id];
-  //     if (inProgress) {
-  //       const newInProgress = inProgressRecipes
-  //         .filter((item) => item.id !== detailsDrink[0].idDrink);
-  //       localStorage.setItem('inProgressRecipes', JSON.stringify(newInProgress));
-  //     }
-  //   }
-  // };
+  const [inProgress, setInProgress] = useState(
+    JSON.parse(localStorage.getItem('inProgressRecipes')) || {
+      drinks: {},
+      meals: {},
+    },
+  );
+
+  const doneStep = ({ target }) => {
+    const ingredient = target.value;
+
+    if (target.checked) {
+      if (!inProgress.drinks[id]) {
+        inProgress.drinks[id] = [ingredient];
+      } else {
+        inProgress.drinks[id].push(ingredient);
+      }
+    }
+
+    if (!target.checked) {
+      inProgress.drinks[id] = inProgress.drinks[id].filter((item) => item !== ingredient);
+    }
+
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgress));
+
+    setInProgress(JSON.parse(localStorage.getItem('inProgressRecipes')));
+  };
 
   useEffect(() => {
     const fetchMeal = async () => {
@@ -58,13 +62,6 @@ export default function MealsInProgress({ match: { params: { id } } }) {
       strInstructions,
     } = detailsRecipes[0];
 
-    const doneStep = ({ target }) => {
-      const done = target.parentNode;
-      const ingredient = target.value;
-      console.log(ingredient);
-      done.classList.toggle('done');
-    };
-
     return (
       <div>
         <h1 data-testid="recipe-title">{strMeal}</h1>
@@ -76,6 +73,8 @@ export default function MealsInProgress({ match: { params: { id } } }) {
             <label
               htmlFor={ `${index}-ingredient-step` }
               data-testid={ `${index}-ingredient-step` }
+              className={ inProgress.drinks[id]
+                && inProgress.drinks[id].includes(item.ingredient) ? 'done' : '' }
             >
               {item.ingredient}
               -
@@ -85,6 +84,8 @@ export default function MealsInProgress({ match: { params: { id } } }) {
                 id={ `${index}-ingredient-step` }
                 value={ item.ingredient }
                 onChange={ (e) => doneStep(e) }
+                checked={ inProgress.drinks[id]
+                  && inProgress.drinks[id].includes(item.ingredient) }
               />
             </label>
           </div>

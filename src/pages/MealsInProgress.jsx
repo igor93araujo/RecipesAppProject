@@ -42,14 +42,10 @@ export default function MealsInProgress({ match: { params: { id } } }) {
     fetchDetails();
   }, [id, setDetailsRecipes]);
 
-  function details() {
-    const result = [];
-    const limit = 8;
   const details = useCallback(() => {
     const limit = 8;
     const ingredients = [];
     const measures = [];
-
     for (let i = 1; i <= limit; i += 1) {
       if (detailsRecipes[0][`strIngredient${i}`]) {
         ingredients.push(detailsRecipes[0][`strIngredient${i}`]);
@@ -58,49 +54,12 @@ export default function MealsInProgress({ match: { params: { id } } }) {
         measures.push(detailsRecipes[0][`strMeasure${i}`]);
       }
     }
-
-    markedIngredient.current = result;
-
-    const {
-      strMeal,
-      strCategory,
-      strMealThumb,
-      strInstructions,
-    } = detailsRecipes[0];
-
-    return (
-      <div>
-        <h1 data-testid="recipe-title">{strMeal}</h1>
-        <h2 data-testid="recipe-category">{strCategory}</h2>
-        <img src={ strMealThumb } alt={ strMeal } data-testid="recipe-photo" />
-        <h3>Ingredients</h3>
-        {result.map((item, index) => (
-          <div key={ index }>
-            <label
-              htmlFor={ `${index}-ingredient-step` }
-              data-testid={ `${index}-ingredient-step` }
-              className={ inProgress.meals[id]
-                && inProgress.meals[id].includes(item.ingredient) ? 'done' : '' }
-            >
-              {item.ingredient}
-              -
-              {item.measure}
-              <input
-                type="checkbox"
-                id={ `${index}-ingredient-step` }
-                value={ item.ingredient }
-                onChange={ (e) => doneStep(e) }
-                checked={ inProgress.meals[id]
-                  && inProgress.meals[id].includes(item.ingredient) }
-              />
-            </label>
-          </div>
-        ))}
-        <h3>Instructions</h3>
-        <p data-testid="instructions">{strInstructions}</p>
-      </div>
-    );
-  }
+    const ingredientsAndMeasures = ingredients.map((item, index) => ({
+      ingredient: item,
+      measure: measures[index],
+    }));
+    return ingredientsAndMeasures;
+  }, [detailsRecipes]);
 
   const handleClick = () => {
     const ingredients = details();
@@ -165,7 +124,7 @@ export default function MealsInProgress({ match: { params: { id } } }) {
       <button
         type="button"
         data-testid="finish-recipe-btn"
-        disabled={ !disabled }
+        disabled={ isEnable.current }
         onClick={ handleClick }
       >
         Finish Recipe

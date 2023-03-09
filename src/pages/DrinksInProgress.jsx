@@ -1,4 +1,3 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
@@ -66,12 +65,6 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
 
     markedIngredient.current = result.map((item) => item.ingredient);
 
-    const {
-      strDrink,
-      strCategory,
-      strDrinkThumb,
-      strInstructions,
-    } = detailsRecipes[0];
     const ingredientsAndMeasures = ingredients.map((item, index) => ({
       ingredient: item,
       measure: measures[index],
@@ -90,6 +83,15 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
       isEnable.current = true;
     }
   };
+
+  console.log(inProgress.drinks[id]);
+  const test = inProgress.drinks[id];
+  console.log(markedIngredient.current);
+  const disabled = markedIngredient.current.length !== 0
+    ? markedIngredient.current
+      .every((item, index) => item === test[index])
+    : false;
+  console.log(disabled);
 
   return (
     <section>
@@ -126,40 +128,6 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
                   onChange={ (event) => doneStep(event) }
                   checked={ inProgress.drinks[id]
                   && inProgress.drinks[id].includes(item.ingredient) }
-              />
-            </label>
-          </div>
-        ))}
-        <h3>Instructions</h3>
-        <p data-testid="instructions">{strInstructions}</p>
-      </div>
-    );
-  }
-
-  console.log(inProgress.drinks[id]);
-  const test = inProgress.drinks[id];
-  console.log(markedIngredient.current);
-  const disabled = markedIngredient.current.length !== 0
-    ? markedIngredient.current
-      .every((item, index) => item === test[index])
-    : false;
-  console.log(disabled);
-
-  return (
-    <section>
-      <h1>DrinksInProgress</h1>
-      { detailsRecipes && details() }
-      <button type="button" data-testid="share-btn">
-        Share
-      </button>
-      <button type="button" data-testid="favorite-btn">
-        Favorite
-      </button>
-      <button
-        type="button"
-        data-testid="finish-recipe-btn"
-        onClick={ handleClick }
-        disabled={ !disabled }
                 />
               </label>
             </div>
@@ -169,6 +137,14 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
         </div>
       ) }
       <ButtonsFavoriteShare id={ id } type={ detailsRecipes } />
+      <button
+        type="button"
+        data-testid="finish-recipe-btn"
+        disabled={ isEnable.current }
+        onClick={ handleClick }
+      >
+        Finish Recipe
+      </button>
     </section>
   );
 }

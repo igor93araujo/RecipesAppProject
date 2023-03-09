@@ -2,21 +2,11 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Recomendations from '../components/Recomendations';
 import ButtonStartRecipe from '../components/ButtonStartRecipe';
-import blackHeartIcon from '../images/blackHeartIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-
-import image from '../images/shareIcon.svg';
-
-const copy = require('clipboard-copy');
+import ButtonsFavoriteShare from '../components/ButtonsFavoriteShare';
 
 export default function DetailsDrinks({ match: { params: { id } } }) {
   const [detailsDrink, setDrinkDetails] = useState([]);
-  const [favoriteDrink, setFavoriteDrink] = useState(
-    JSON.parse(localStorage.getItem('favoriteRecipes')) !== null
-      ? JSON.parse(localStorage.getItem('favoriteRecipes'))
-        .some((item) => item.id === id) : false,
-  );
-  const [checkTheLinkCopied, setCheckTheLinkCopied] = useState(false);
+
   const ingredients = [];
   const medidas = [];
 
@@ -39,50 +29,6 @@ export default function DetailsDrinks({ match: { params: { id } } }) {
       }
     });
   }
-
-  const handleClickShare = () => {
-    const url = window.location.href;
-    copy(url);
-    setCheckTheLinkCopied(true);
-  };
-
-  const addFavorite = () => {
-    const favorites = JSON.parse(localStorage.getItem('favoriteRecipes'));
-    if (favorites) {
-      const isFavorite = favorites.some((item) => item.id === detailsDrink[0].idDrink);
-      if (isFavorite) {
-        const newFavorites = favorites
-          .filter((item) => item.id !== detailsDrink[0].idDrink);
-        localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
-        setFavoriteDrink(false);
-      } else {
-        const newFavorite = {
-          id: detailsDrink[0].idDrink,
-          type: 'drink',
-          nationality: '',
-          category: detailsDrink[0].strCategory,
-          alcoholicOrNot: detailsDrink[0].strAlcoholic,
-          name: detailsDrink[0].strDrink,
-          image: detailsDrink[0].strDrinkThumb,
-        };
-        localStorage
-          .setItem('favoriteRecipes', JSON.stringify([...favorites, newFavorite]));
-        setFavoriteDrink(true);
-      }
-    } else {
-      const newFavorite = {
-        id: detailsDrink[0].idDrink,
-        type: 'drink',
-        nationality: '',
-        category: detailsDrink[0].strCategory,
-        alcoholicOrNot: detailsDrink[0].strAlcoholic,
-        name: detailsDrink[0].strDrink,
-        image: detailsDrink[0].strDrinkThumb,
-      };
-      localStorage.setItem('favoriteRecipes', JSON.stringify([newFavorite]));
-      setFavoriteDrink(true);
-    }
-  };
 
   return (
     <section>
@@ -120,35 +66,7 @@ export default function DetailsDrinks({ match: { params: { id } } }) {
                   }
                 </ul>
               </div>
-              <div>
-                <button
-                  type="button"
-                  data-testid="share-btn"
-                  onClick={ () => handleClickShare() }
-                >
-                  <img
-                    src={ image }
-                    alt="img"
-                    style={ { height: '20px', width: '20px' } }
-                  />
-                </button>
-                <button
-                  type="button"
-                  onClick={ () => addFavorite() }
-                  className="favorite"
-                >
-                  <img
-                    data-testid="favorite-btn"
-                    src={ favoriteDrink ? blackHeartIcon : whiteHeartIcon }
-                    alt="favorite"
-                  />
-                </button>
-                {
-                  !checkTheLinkCopied
-                    ? ''
-                    : <p>Link copied!</p>
-                }
-              </div>
+              <ButtonsFavoriteShare id={ id } type={ detailsDrink } />
             </div>
           )
           : null

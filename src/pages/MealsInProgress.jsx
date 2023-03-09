@@ -1,28 +1,29 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import ButtonsFavoriteShare from '../components/ButtonsFavoriteShare';
 import { AppContext } from '../context/AppContext';
 
 export default function MealsInProgress({ match: { params: { id } } }) {
-  const {
-    detailsRecipes,
-    setDetailsRecipes,
-    finishedRecipes,
-    setFinishedRecipes,
-  } = useContext(AppContext);
+  // const {
+  //   finishedRecipes,
+  //   setFinishedRecipes,
+  // } = useContext(AppContext);
 
   const [inProgress, setInProgress] = useState(
-    JSON.parse(localStorage.getItem('inProgressRecipes')) || {
-      drinks: {},
-      meals: {},
-    },
+    JSON.parse(localStorage.getItem('inProgressRecipes')) !== null
+      ? JSON.parse(localStorage.getItem('inProgressRecipes')) : {
+        drinks: {},
+        meals: {},
+      },
   );
-
+  const { detailsRecipes, setDetailsRecipes } = useContext(AppContext);
   const history = useHistory();
+  const isEnable = useRef(true);
 
   const doneStep = ({ target }) => {
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgress));
     const ingredient = target.value;
-
     if (target.checked) {
       if (!inProgress.meals[id]) {
         inProgress.meals[id] = [ingredient];
@@ -30,119 +31,100 @@ export default function MealsInProgress({ match: { params: { id } } }) {
         inProgress.meals[id].push(ingredient);
       }
     }
-
     if (!target.checked) {
       inProgress.meals[id] = inProgress.meals[id].filter((item) => item !== ingredient);
     }
-
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgress));
-
     setInProgress(JSON.parse(localStorage.getItem('inProgressRecipes')));
   };
 
   useEffect(() => {
-    const fetchMeal = async () => {
-      const { meals } = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`).then((res) => res.json());
-      setDetailsRecipes(meals);
+    const fetchDetails = async () => {
+      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
+      const data = await response.json();
+      setDetailsRecipes(data.meals);
     };
-    fetchMeal();
+    fetchDetails();
   }, [id, setDetailsRecipes]);
 
-  function details() {
+  const details = useCallback(() => {
     const limit = 8;
-    const result = [];
+    const ingredients = [];
+    const measures = [];
+
     for (let i = 1; i <= limit; i += 1) {
-      const ingredient = `strIngredient${i}`;
-      const measure = `strMeasure${i}`;
-      if (detailsRecipes[0][ingredient] !== null
-          && detailsRecipes[0][ingredient] !== '') {
-        result.push({
-          ingredient: detailsRecipes[0][ingredient],
-          measure: detailsRecipes[0][measure],
-        });
+      if (detailsRecipes[0][`strIngredient${i}`]) {
+        ingredients.push(detailsRecipes[0][`strIngredient${i}`]);
+      }
+      if (detailsRecipes[0][`strMeasure${i}`]) {
+        measures.push(detailsRecipes[0][`strMeasure${i}`]);
       }
     }
 
-    const {
-      strMeal,
-      strCategory,
-      strMealThumb,
-      strInstructions,
-    } = detailsRecipes[0];
+    const ingredientsAndMeasures = ingredients.map((item, index) => ({
+      ingredient: item,
+      measure: measures[index],
+    }));
 
-    return (
-      <div>
-        <h1 data-testid="recipe-title">{strMeal}</h1>
-        <h2 data-testid="recipe-category">{strCategory}</h2>
-        <img src={ strMealThumb } alt={ strMeal } data-testid="recipe-photo" />
-        <h3>Ingredients</h3>
-        {result.map((item, index) => (
-          <div key={ index }>
-            <label
-              htmlFor={ `${index}-ingredient-step` }
-              data-testid={ `${index}-ingredient-step` }
-              className={ inProgress.meals[id]
-                && inProgress.meals[id].includes(item.ingredient) ? 'done' : '' }
-            >
-              {item.ingredient}
-              -
-              {item.measure}
-              <input
-                type="checkbox"
-                id={ `${index}-ingredient-step` }
-                value={ item.ingredient }
-                onChange={ (e) => doneStep(e) }
-                checked={ inProgress.meals[id]
-                  && inProgress.meals[id].includes(item.ingredient) }
-              />
-            </label>
-          </div>
-        ))}
-        <h3>Instructions</h3>
-        <p data-testid="instructions">{strInstructions}</p>
-      </div>
-    );
-  }
+    return ingredientsAndMeasures;
+  }, [detailsRecipes]);
 
-  const finishRecipe = () => {
-    const { strMeal, strMealThumb } = detailsRecipes[0];
-    const recipe = {
-      id,
-      type: history.location.pathname.includes('meals') ? 'meal' : 'drink',
-      nationality: detailsRecipes[0].strArea
-        ? detailsRecipes[0].strArea : '',
-      category: detailsRecipes[0].strCategory
-        ? detailsRecipes[0].strCategory : '',
-      alcoholicOrNot: detailsRecipes[0].strAlcoholic
-        ? detailsRecipes[0].strAlcoholic : '',
-      name: strMeal,
-      image: strMealThumb,
-      doneDate: new Date().toLocaleDateString(),
-      tags: detailsRecipes[0].strTags
-        ? detailsRecipes[0].strTags.split(',') : [],
-    };
-    setFinishedRecipes(
-      [...finishedRecipes, recipe],
-    );
-
-    history.push('/receitas-feitas');
-    localStorage.setItem('doneRecipes', JSON.stringify([...finishedRecipes, recipe]));
+  const handleClick = () => {
+    const ingredients = details();
+    const ingredientsChecked = inProgress.meals[id];
+    if (ingredientsChecked && ingredientsChecked.length === ingredients.length) {
+      isEnable.current = false;
+      history.push('/done-recipes');
+    } else {
+      isEnable.current = true;
+    }
   };
 
   return (
     <section>
       <h1>MealsInProgress</h1>
-      { detailsRecipes && details() }
-      <button type="button" data-testid="share-btn">
-        Share
-      </button>
-      <button type="button" data-testid="favorite-btn">
-        Favorite
-      </button>
+      { detailsRecipes && (
+        <div>
+          <h1 data-testid="recipe-title">{detailsRecipes[0].strMeal}</h1>
+          <h2 data-testid="recipe-category">{detailsRecipes[0].strCategory}</h2>
+          <img
+            src={ detailsRecipes[0].strMealThumb }
+            alt={ detailsRecipes[0].strMeal }
+            data-testid="recipe-photo"
+          />
+          <h3>Ingredients</h3>
+          {details().map((item, index) => (
+            <div key={ index }>
+              <label
+                htmlFor={ `${index}-ingredient-step` }
+                data-testid={ `${index}-ingredient-step` }
+                className={ inProgress.meals[id]
+                && inProgress.meals[id].includes(item.ingredient) ? 'done' : '' }
+              >
+                {item.ingredient}
+                -
+                {item.measure}
+                <input
+                  type="checkbox"
+                  id={ `${item.ingredient}` }
+                  value={ item.ingredient }
+                  onChange={ (event) => doneStep(event) }
+                  checked={ inProgress.meals[id]
+                  && inProgress.meals[id].includes(item.ingredient) }
+                />
+              </label>
+            </div>
+          ))}
+          <h3>Instructions</h3>
+          <p data-testid="instructions">{detailsRecipes[0].strInstructions}</p>
+        </div>
+      ) }
+      <ButtonsFavoriteShare id={ id } type={ detailsRecipes } />
       <button
         type="button"
         data-testid="finish-recipe-btn"
-        onClick={ () => finishRecipe() }
+        disabled={ isEnable.current }
+        onClick={ handleClick }
       >
         Finish Recipe
       </button>

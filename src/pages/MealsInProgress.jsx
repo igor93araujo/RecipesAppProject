@@ -16,6 +16,11 @@ export default function MealsInProgress({ match: { params: { id } } }) {
   const history = useHistory();
   const isEnable = useRef(true);
 
+  const [doneRecipes, setDoneRecipes] = useState(
+    JSON.parse(localStorage.getItem('doneRecipes')) !== null
+      ? JSON.parse(localStorage.getItem('doneRecipes')) : [],
+  );
+
   const doneStep = ({ target }) => {
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgress));
     const ingredient = target.value;
@@ -61,9 +66,35 @@ export default function MealsInProgress({ match: { params: { id } } }) {
     return ingredientsAndMeasures;
   }, [detailsRecipes]);
 
-  const handleClick = () => {
+  const handleClick = ({ target }) => {
     const ingredients = details();
     const ingredientsChecked = inProgress.meals[id];
+
+    if (target.textContent === 'Finish Recipe') {
+      const date = new Date();
+      const day = date.getDate();
+      const month = date.getMonth() + 1;
+      const year = date.getFullYear();
+      const hour = date.getHours();
+      const minutes = date.getMinutes();
+      const seconds = date.getSeconds();
+      const doneDate = `${day}/${month}/${year} ${hour}:${minutes}:${seconds}`;
+
+      const doneRecipe = {
+        id: detailsRecipes[0].idMeals,
+        type: history.location.pathname.includes('meals') ? 'meal' : 'drink',
+        nationality: detailsRecipes[0].strArea || '',
+        category: detailsRecipes[0].strCategory || '',
+        alcoholicOrNot: detailsRecipes[0].strAlcoholic || '',
+        name: detailsRecipes[0].strMeal,
+        image: detailsRecipes[0].strMealThumb,
+        doneDate,
+        tags: [strTags.split(',') || ''],
+      };
+      setDoneRecipes([...doneRecipes, doneRecipe]);
+      localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, doneRecipe]));
+    }
+
     if (ingredientsChecked && ingredientsChecked.length === ingredients.length) {
       isEnable.current = false;
       history.push('/done-recipes');

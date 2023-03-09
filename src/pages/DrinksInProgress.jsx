@@ -4,6 +4,13 @@ import { useHistory } from 'react-router-dom';
 import ButtonsFavoriteShare from '../components/ButtonsFavoriteShare';
 
 export default function DrinksInProgress({ match: { params: { id } } }) {
+  const {
+    finishedRecipes,
+    setFinishedRecipes,
+  } = useContext(AppContext);
+
+  const history = useHistory();
+
   const [inProgress, setInProgress] = useState(
     JSON.parse(localStorage.getItem('inProgressRecipes')) || {
       drinks: {},
@@ -69,6 +76,31 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
   //   }
   // };
 
+  const finishRecipe = () => {
+    const { strDrink, strDrinkThumb } = detailsRecipes[0];
+    const recipe = {
+      id,
+      type: history.location.pathname.includes('meals') ? 'meal' : 'drink',
+      nationality: detailsRecipes[0].strArea
+        ? detailsRecipes[0].strArea : '',
+      category: detailsRecipes[0].strCategory
+        ? detailsRecipes[0].strCategory : '',
+      alcoholicOrNot: detailsRecipes[0].strAlcoholic
+        ? detailsRecipes[0].strAlcoholic : '',
+      name: strDrink,
+      image: strDrinkThumb,
+      doneDate: new Date().toLocaleDateString(),
+      tags: detailsRecipes[0].strTags
+        ? detailsRecipes[0].strTags.split(',') : [],
+    };
+    setFinishedRecipes(
+      [...finishedRecipes, recipe],
+    );
+
+    history.push('/receitas-feitas');
+    localStorage.setItem('doneRecipes', JSON.stringify([...finishedRecipes, recipe]));
+  };
+
   return (
     <section>
       <h1>DrinksInProgress</h1>
@@ -116,7 +148,7 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
       <button
         type="button"
         data-testid="finish-recipe-btn"
-        onClick={ () => history.push('/done-recipes') }
+        onClick={ () => finishRecipe() }
       >
         Finish Recipe
       </button>

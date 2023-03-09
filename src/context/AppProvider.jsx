@@ -22,6 +22,9 @@ export function AppProvider({ children }) {
   const [categoryArrayMeals, setCategoryArrayMeals] = useState([]);
   const [categoryArrayDrinks, setCategoryArrayDrinks] = useState([]);
   const [isError, setIsError] = useState(false);
+  const [finishedRecipes, setFinishedRecipes] = useState(
+    JSON.parse(localStorage.getItem('doneRecipes')) || [],
+  );
 
   const fetchCategoryMeals = useCallback(async () => {
     const limit = 5;
@@ -70,6 +73,8 @@ export function AppProvider({ children }) {
       setCategoryArrayMeals,
       categoryArrayDrinks,
       setCategoryArrayDrinks,
+      finishedRecipes,
+      setFinishedRecipes,
     }),
     [
       user,
@@ -93,6 +98,8 @@ export function AppProvider({ children }) {
       setCategoryArrayMeals,
       categoryArrayDrinks,
       setCategoryArrayDrinks,
+      finishedRecipes,
+      setFinishedRecipes,
     ],
   );
 

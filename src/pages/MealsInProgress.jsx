@@ -1,4 +1,3 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
@@ -6,13 +5,6 @@ import ButtonsFavoriteShare from '../components/ButtonsFavoriteShare';
 import { AppContext } from '../context/AppContext';
 
 export default function MealsInProgress({ match: { params: { id } } }) {
-  // const {
-  //   finishedRecipes,
-  //   setFinishedRecipes,
-  // } = useContext(AppContext);
-
-  const markedIngredient = useRef([]);
-
   const [inProgress, setInProgress] = useState(
     JSON.parse(localStorage.getItem('inProgressRecipes')) !== null
       ? JSON.parse(localStorage.getItem('inProgressRecipes')) : {

@@ -21,8 +21,6 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
   const isEnable = useRef(true);
   const history = useHistory();
 
-  const markedIngredient = useRef([]);
-
   const doneStep = ({ target }) => {
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgress));
     const ingredient = target.value;
@@ -63,8 +61,6 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
       }
     }
 
-    markedIngredient.current = result.map((item) => item.ingredient);
-
     const ingredientsAndMeasures = ingredients.map((item, index) => ({
       ingredient: item,
       measure: measures[index],
@@ -83,15 +79,6 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
       isEnable.current = true;
     }
   };
-
-  console.log(inProgress.drinks[id]);
-  const test = inProgress.drinks[id];
-  console.log(markedIngredient.current);
-  const disabled = markedIngredient.current.length !== 0
-    ? markedIngredient.current
-      .every((item, index) => item === test[index])
-    : false;
-  console.log(disabled);
 
   return (
     <section>

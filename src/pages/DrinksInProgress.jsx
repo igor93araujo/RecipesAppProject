@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import ButtonsFavoriteShare from '../components/ButtonsFavoriteShare';
 
 export default function DrinksInProgress({ match: { params: { id } } }) {
-  const {
-    finishedRecipes,
-    setFinishedRecipes,
-  } = useContext(AppContext);
+  // const {
+  //   finishedRecipes,
+  //   setFinishedRecipes,
+  // } = useContext(AppContext);
 
   const [inProgress, setInProgress] = useState(
     JSON.parse(localStorage.getItem('inProgressRecipes')) || {
@@ -17,7 +17,7 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
   );
   const [detailsRecipes, setDetailsRecipes] = useState();
   const history = useHistory();
-  // const [isDisabled, setIsDisabled] = useState(true);
+  const isEnable = useRef(false);
 
   const doneStep = ({ target }) => {
     const ingredient = target.value;
@@ -44,7 +44,7 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
     fetchDetails();
   }, [id, setDetailsRecipes]);
 
-  function details() {
+  const details = useCallback(() => {
     const limit = 8;
     const ingredients = [];
     const measures = [];
@@ -64,40 +64,13 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
     }));
 
     return ingredientsAndMeasures;
-  }
+  }, [detailsRecipes]);
 
-  // const enableButton = () => {
-  //   const ingredients = details();
-  //   const checkedIngredients = inProgress.drinks[id] || [];
-  //   if (ingredients.length === checkedIngredients.length) {
-  //     setIsDisabled(false);
-  //   }
-  // };
-
-  const finishRecipe = () => {
-    const { strDrink, strDrinkThumb } = detailsRecipes[0];
-    const recipe = {
-      id,
-      type: history.location.pathname.includes('meals') ? 'meal' : 'drink',
-      nationality: detailsRecipes[0].strArea
-        ? detailsRecipes[0].strArea : '',
-      category: detailsRecipes[0].strCategory
-        ? detailsRecipes[0].strCategory : '',
-      alcoholicOrNot: detailsRecipes[0].strAlcoholic
-        ? detailsRecipes[0].strAlcoholic : '',
-      name: strDrink,
-      image: strDrinkThumb,
-      doneDate: new Date().toLocaleDateString(),
-      tags: detailsRecipes[0].strTags
-        ? detailsRecipes[0].strTags.split(',') : [],
-    };
-    setFinishedRecipes(
-      [...finishedRecipes, recipe],
-    );
-
-    history.push('/receitas-feitas');
-    localStorage.setItem('doneRecipes', JSON.stringify([...finishedRecipes, recipe]));
-  };
+  useEffect(() => {
+    if (inProgress.drinks[id] && inProgress.drinks[id].length === details().length) {
+      isEnable.current = true;
+    }
+  }, [inProgress, id, details]);
 
   return (
     <section>
@@ -146,7 +119,9 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
       <button
         type="button"
         data-testid="finish-recipe-btn"
-        onClick={ () => finishRecipe() }
+        disabled={ isEnable.current }
+        ref={ isEnable }
+        onClick={ () => history.push('/done-recipes') }
       >
         Finish Recipe
       </button>

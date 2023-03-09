@@ -5,11 +5,6 @@ import ButtonsFavoriteShare from '../components/ButtonsFavoriteShare';
 import { AppContext } from '../context/AppContext';
 
 export default function MealsInProgress({ match: { params: { id } } }) {
-  // const {
-  //   finishedRecipes,
-  //   setFinishedRecipes,
-  // } = useContext(AppContext);
-
   const [inProgress, setInProgress] = useState(
     JSON.parse(localStorage.getItem('inProgressRecipes')) !== null
       ? JSON.parse(localStorage.getItem('inProgressRecipes')) : {

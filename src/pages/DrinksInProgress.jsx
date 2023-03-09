@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
@@ -19,6 +19,8 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
       meals: {},
     },
   );
+
+  const markedIngredient = useRef([]);
 
   const doneStep = ({ target }) => {
     const ingredient = target.value;
@@ -62,6 +64,8 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
         });
       }
     }
+
+    markedIngredient.current = result.map((item) => item.ingredient);
 
     const {
       strDrink,
@@ -132,6 +136,15 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
     localStorage.setItem('doneRecipes', JSON.stringify([...finishedRecipes, recipe]));
   };
 
+  console.log(inProgress.drinks[id]);
+  const test = inProgress.drinks[id];
+  console.log(markedIngredient.current);
+  const disabled = markedIngredient.current.length !== 0
+    ? markedIngredient.current
+      .every((item, index) => item === test[index])
+    : false;
+  console.log(disabled);
+
   return (
     <section>
       <h1>DrinksInProgress</h1>
@@ -146,6 +159,7 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
         type="button"
         data-testid="finish-recipe-btn"
         onClick={ () => finishRecipe() }
+        disabled={ !disabled }
       >
         Finish Recipe
       </button>

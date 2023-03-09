@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
@@ -10,6 +10,8 @@ export default function MealsInProgress({ match: { params: { id } } }) {
     finishedRecipes,
     setFinishedRecipes,
   } = useContext(AppContext);
+
+  const markedIngredient = useRef([]);
 
   const [inProgress, setInProgress] = useState(
     JSON.parse(localStorage.getItem('inProgressRecipes')) || {
@@ -49,8 +51,8 @@ export default function MealsInProgress({ match: { params: { id } } }) {
   }, [id, setDetailsRecipes]);
 
   function details() {
-    const limit = 8;
     const result = [];
+    const limit = 8;
     for (let i = 1; i <= limit; i += 1) {
       const ingredient = `strIngredient${i}`;
       const measure = `strMeasure${i}`;
@@ -62,6 +64,8 @@ export default function MealsInProgress({ match: { params: { id } } }) {
         });
       }
     }
+
+    markedIngredient.current = result;
 
     const {
       strMeal,
@@ -129,6 +133,15 @@ export default function MealsInProgress({ match: { params: { id } } }) {
     localStorage.setItem('doneRecipes', JSON.stringify([...finishedRecipes, recipe]));
   };
 
+  console.log(inProgress.meals[id]);
+  const test = inProgress.meals[id];
+  console.log(markedIngredient.current);
+  const disabled = markedIngredient.current.length !== 0
+    ? markedIngredient.current
+      .every((item, index) => item.ingredient === test[index])
+    : false;
+  console.log(disabled);
+
   return (
     <section>
       <h1>MealsInProgress</h1>
@@ -143,6 +156,7 @@ export default function MealsInProgress({ match: { params: { id } } }) {
         type="button"
         data-testid="finish-recipe-btn"
         onClick={ () => finishRecipe() }
+        disabled={ !disabled }
       >
         Finish Recipe
       </button>

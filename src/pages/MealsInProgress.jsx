@@ -5,11 +5,6 @@ import ButtonsFavoriteShare from '../components/ButtonsFavoriteShare';
 import { AppContext } from '../context/AppContext';
 
 export default function MealsInProgress({ match: { params: { id } } }) {
-  // const {
-  //   finishedRecipes,
-  //   setFinishedRecipes,
-  // } = useContext(AppContext);
-
   const [inProgress, setInProgress] = useState(
     JSON.parse(localStorage.getItem('inProgressRecipes')) !== null
       ? JSON.parse(localStorage.getItem('inProgressRecipes')) : {
@@ -51,7 +46,6 @@ export default function MealsInProgress({ match: { params: { id } } }) {
     const limit = 8;
     const ingredients = [];
     const measures = [];
-
     for (let i = 1; i <= limit; i += 1) {
       if (detailsRecipes[0][`strIngredient${i}`]) {
         ingredients.push(detailsRecipes[0][`strIngredient${i}`]);
@@ -60,12 +54,10 @@ export default function MealsInProgress({ match: { params: { id } } }) {
         measures.push(detailsRecipes[0][`strMeasure${i}`]);
       }
     }
-
     const ingredientsAndMeasures = ingredients.map((item, index) => ({
       ingredient: item,
       measure: measures[index],
     }));
-
     return ingredientsAndMeasures;
   }, [detailsRecipes]);
 
@@ -79,6 +71,15 @@ export default function MealsInProgress({ match: { params: { id } } }) {
       isEnable.current = true;
     }
   };
+
+  console.log(inProgress.meals[id]);
+  const test = inProgress.meals[id];
+  console.log(markedIngredient.current);
+  const disabled = markedIngredient.current.length !== 0
+    ? markedIngredient.current
+      .every((item, index) => item.ingredient === test[index])
+    : false;
+  console.log(disabled);
 
   return (
     <section>

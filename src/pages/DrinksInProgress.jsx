@@ -18,8 +18,8 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
       },
   );
   const { detailsRecipes, setDetailsRecipes } = useContext(AppContext);
-  const history = useHistory();
   const isEnable = useRef(true);
+  const history = useHistory();
 
   const doneStep = ({ target }) => {
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgress));

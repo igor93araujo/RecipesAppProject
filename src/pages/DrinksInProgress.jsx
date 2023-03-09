@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import ButtonsFavoriteShare from '../components/ButtonsFavoriteShare';
@@ -18,10 +18,8 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
       },
   );
   const { detailsRecipes, setDetailsRecipes } = useContext(AppContext);
-  const isEnable = useRef(true);
   const history = useHistory();
-
-  const markedIngredient = useRef([]);
+  const isEnable = useRef(true);
 
   const doneStep = ({ target }) => {
     localStorage.setItem('inProgressRecipes', JSON.stringify(inProgress));
@@ -81,15 +79,6 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
       isEnable.current = true;
     }
   };
-
-  console.log(inProgress.drinks[id]);
-  const test = inProgress.drinks[id];
-  console.log(markedIngredient.current);
-  const disabled = markedIngredient.current.length !== 0
-    ? markedIngredient.current
-      .every((item, index) => item === test[index])
-    : false;
-  console.log(disabled);
 
   return (
     <section>

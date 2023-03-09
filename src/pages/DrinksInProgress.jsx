@@ -9,8 +9,6 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
     setFinishedRecipes,
   } = useContext(AppContext);
 
-  const history = useHistory();
-
   const [inProgress, setInProgress] = useState(
     JSON.parse(localStorage.getItem('inProgressRecipes')) || {
       drinks: {},

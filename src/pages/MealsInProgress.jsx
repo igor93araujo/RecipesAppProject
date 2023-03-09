@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import ButtonsFavoriteShare from '../components/ButtonsFavoriteShare';
+import { AppContext } from '../context/AppContext';
 
 export default function MealsInProgress({ match: { params: { id } } }) {
   // const {
@@ -10,16 +11,18 @@ export default function MealsInProgress({ match: { params: { id } } }) {
   // } = useContext(AppContext);
 
   const [inProgress, setInProgress] = useState(
-    JSON.parse(localStorage.getItem('inProgressRecipes')) || {
-      drinks: {},
-      meals: {},
-    },
+    JSON.parse(localStorage.getItem('inProgressRecipes')) !== null
+      ? JSON.parse(localStorage.getItem('inProgressRecipes')) : {
+        drinks: {},
+        meals: {},
+      },
   );
-  const [detailsRecipes, setDetailsRecipes] = useState();
+  const { detailsRecipes, setDetailsRecipes } = useContext(AppContext);
   const history = useHistory();
-  const isEnable = useRef(false);
+  const isEnable = useRef(true);
 
   const doneStep = ({ target }) => {
+    localStorage.setItem('inProgressRecipes', JSON.stringify(inProgress));
     const ingredient = target.value;
     if (target.checked) {
       if (!inProgress.meals[id]) {
@@ -66,11 +69,16 @@ export default function MealsInProgress({ match: { params: { id } } }) {
     return ingredientsAndMeasures;
   }, [detailsRecipes]);
 
-  useEffect(() => {
-    if (inProgress.drinks[id] && inProgress.drinks[id].length === details().length) {
+  const handleClick = () => {
+    const ingredients = details();
+    const ingredientsChecked = inProgress.meals[id];
+    if (ingredientsChecked && ingredientsChecked.length === ingredients.length) {
+      isEnable.current = false;
+      history.push('/done-recipes');
+    } else {
       isEnable.current = true;
     }
-  }, [inProgress, id, details]);
+  };
 
   return (
     <section>
@@ -116,7 +124,7 @@ export default function MealsInProgress({ match: { params: { id } } }) {
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ isEnable.current }
-        onClick={ () => history.push('/done-recipes') }
+        onClick={ handleClick }
       >
         Finish Recipe
       </button>

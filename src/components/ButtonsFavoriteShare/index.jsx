@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import copy from 'clipboard-copy';
 import PropTypes from 'prop-types';
+import { useRouteMatch } from 'react-router-dom';
 
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
@@ -15,7 +16,7 @@ function ButtonsFavoriteShare({ id, type }) {
       : false,
   );
   const [checkTheLinkCopied, setCheckTheLinkCopied] = useState(false);
-  const location = window.location.href;
+  const { url } = useRouteMatch();
 
   const addFavorite = () => {
     // add the recipe in progress to favorite recipes (meals or drinks) and save it in localStorage
@@ -56,11 +57,7 @@ function ButtonsFavoriteShare({ id, type }) {
 
   const handleClickShare = () => {
     // copy to clipboard the link of the recipe in progress (meals or drinks)
-    if (location === `http://localhost:3000/meals/${id}/in-progress`) {
-      copy(`http://localhost:3000/meals/${id}`);
-    } else {
-      copy(`http://localhost:3000/drinks/${id}`);
-    }
+    copy(`http://localhost:3000${url.replace('/in-progress', '')}`);
     setCheckTheLinkCopied(true);
   };
 

@@ -25,6 +25,7 @@ export function AppProvider({ children }) {
   const [finishedRecipes, setFinishedRecipes] = useState(
     JSON.parse(localStorage.getItem('doneRecipes')) || [],
   );
+  const [detailsRecipes, setDetailsRecipes] = useState();
 
   const fetchCategoryMeals = useCallback(async () => {
     const limit = 5;
@@ -75,6 +76,8 @@ export function AppProvider({ children }) {
       setCategoryArrayDrinks,
       finishedRecipes,
       setFinishedRecipes,
+      detailsRecipes,
+      setDetailsRecipes,
     }),
     [
       user,
@@ -100,6 +103,8 @@ export function AppProvider({ children }) {
       setCategoryArrayDrinks,
       finishedRecipes,
       setFinishedRecipes,
+      detailsRecipes,
+      setDetailsRecipes,
     ],
   );
 

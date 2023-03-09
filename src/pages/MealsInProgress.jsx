@@ -72,15 +72,6 @@ export default function MealsInProgress({ match: { params: { id } } }) {
     }
   };
 
-  console.log(inProgress.meals[id]);
-  const test = inProgress.meals[id];
-  console.log(markedIngredient.current);
-  const disabled = markedIngredient.current.length !== 0
-    ? markedIngredient.current
-      .every((item, index) => item.ingredient === test[index])
-    : false;
-  console.log(disabled);
-
   return (
     <section>
       <h1>MealsInProgress</h1>

@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import favoriteBtn from '../images/blackHeartIcon.svg';
 
-const FinishedRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+const FinishedRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
 
 function DoneReceipes() {
   const [filteredRecipes, setFilteredRecipes] = useState([]);

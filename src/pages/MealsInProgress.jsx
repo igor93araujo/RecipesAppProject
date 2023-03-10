@@ -13,6 +13,11 @@ function MealsInProgress({ match: { params: { id } } }) {
       },
   );
 
+  const [doneFinish, setDoneFinish] = useState(
+    JSON.parse(localStorage.getItem('doneRecipes')) !== null
+      ? JSON.parse(localStorage.getItem('doneRecipes')) : [],
+  );
+
   const [allIngredientsChecked, setAllIngredientsChecked] = useState(false);
   const ingredients = useMemo(() => [], []);
   const medidas = [];
@@ -65,23 +70,20 @@ function MealsInProgress({ match: { params: { id } } }) {
   }, [inProgress, ingredients, id, limit]);
 
   const history = useHistory();
-  const finishRecipe = () => {
-    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
-    localStorage.setItem('doneRecipes', JSON.stringify([
-      ...doneRecipes,
-      {
-        id,
-        type: history.location.pathname.includes('meals') ? 'meal' : 'drink',
-        nationality: details[0].strArea,
-        category: details[0].strCategory,
-        alcoholicOrNot: details[0].strAlcoholic || '',
-        name: details[0].strMeal,
-        image: details[0].strMealThumb,
-        doneDate: new Date().toLocaleDateString(),
-        tags: details[0].strTags ? details[0].strTags.split(',') : [],
-      },
-    ]));
-
+  const handleFinishRecipe = () => {
+    const doneRecipe = {
+      id: details[0].idMeal,
+      nationality: details[0].strArea,
+      name: details[0].strMeal,
+      category: details[0].strCategory,
+      image: details[0].strMealThumb,
+      tags: details[0].strTags ? details[0].strTags.split(',') : [],
+      alcoholicOrNot: '',
+      type: 'meal',
+      doneDate: new Date().toISOString(),
+    };
+    setDoneFinish([...doneFinish, doneRecipe]);
+    localStorage.setItem('doneRecipes', JSON.stringify([...doneFinish, doneRecipe]));
     history.push('/done-recipes');
   };
 
@@ -129,7 +131,7 @@ function MealsInProgress({ match: { params: { id } } }) {
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ !allIngredientsChecked }
-        onClick={ () => finishRecipe() }
+        onClick={ () => handleFinishRecipe() }
       >
         Finish Recipe
       </button>

@@ -5,14 +5,14 @@ import Header from '../components/Header';
 
 function Profile() {
   const history = useHistory();
+  const email = JSON.parse(localStorage.getItem('user'));
+  console.log(email.email);
 
   return (
     <section>
       <Header title="Profile" isIconProfile />
       <p data-testid="profile-email">
-        Email:
-        {' '}
-        {JSON.parse(localStorage.getItem('user')).email}
+        {`Email: ${email.email}`}
       </p>
       <button
         type="button"

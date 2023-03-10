@@ -5,29 +5,40 @@ import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import favoriteBtn from '../images/blackHeartIcon.svg';
 
-const FinishedRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-
 function DoneReceipes() {
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [verification, setVerification] = useState(false);
 
+  const recipiesAll = JSON.parse(localStorage.getItem('doneRecipes'));
+
   const filterByMeals = () => {
-    const meals = FinishedRecipes.filter((recipe) => recipe.type === 'meal');
+    const meals = recipiesAll.filter((recipe) => recipe.type === 'meal');
     setFilteredRecipes(meals);
   };
 
   const filterByDrinks = () => {
-    const drinks = FinishedRecipes.filter((recipe) => recipe.type === 'drink');
+    const drinks = recipiesAll.filter((recipe) => recipe.type === 'drink');
     setFilteredRecipes(drinks);
   };
 
   const filterByAll = () => {
-    setFilteredRecipes(FinishedRecipes);
+    setFilteredRecipes(recipiesAll);
   };
 
   useEffect(() => {
+    const FinishedRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
     setFilteredRecipes(FinishedRecipes);
   }, []);
+
+  // const disfavorRecipe = (id) => {
+  //   const items = JSON.parse(localStorage.getItem('doneRecipes'));
+  //   const index = items.findIndex((item) => item.id === id);
+  //   items.splice(index, 1);
+  //   localStorage.setItem('doneRecipes', JSON.stringify(items));
+  //   const recipies = JSON.parse(localStorage.getItem('doneRecipes'));
+  //   console.log(recipies);
+  //   setFilteredRecipes(recipies);
+  // };
 
   const history = useHistory();
 
@@ -119,6 +130,7 @@ function DoneReceipes() {
           <button
             type="button"
             data-testid={ `${index}-horizontal-favorite-btn` }
+            // onClick={ () => disfavorRecipe(recipe.id) }
           >
             <img
               src={ favoriteBtn }

@@ -4,11 +4,11 @@ import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import favoriteBtn from '../images/blackHeartIcon.svg';
 
-const FinishedRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
-
 function DoneReceipes() {
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [verification, setVerification] = useState(false);
+
+  const FinishedRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
   const filterByMeals = () => {
     const meals = FinishedRecipes.filter((recipe) => recipe.type === 'meal');
@@ -25,8 +25,19 @@ function DoneReceipes() {
   };
 
   useEffect(() => {
-    setFilteredRecipes(FinishedRecipes);
+    const recipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    setFilteredRecipes(recipes);
   }, []);
+
+  const disfavorRecipe = (id) => {
+    const items = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    const index = items.findIndex((item) => item.id === id);
+    items.splice(index, 1);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(items));
+    const recipies = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    console.log(recipies);
+    setFilteredRecipes(recipies);
+  };
 
   return (
     <section>
@@ -106,6 +117,7 @@ function DoneReceipes() {
           </button>
           <button
             type="button"
+            onClick={ () => disfavorRecipe(recipe.id) }
           >
             <img
               data-testid={ `${index}-horizontal-favorite-btn` }

@@ -40,4 +40,16 @@ describe('Testa o componente Header.js', () => {
       expect(pathname).toBe('/profile');
     });
   });
+
+  it('2.3 - Teste ao clicar no icone de busca, o campo de pesquisa aparece', () => {
+    renderWithRouter(<App />, ['/meals']);
+
+    const searchButton = screen.getByTestId(searchButtonTestId);
+    const headerSearch = screen.queryByRole('heading', { name: 'Search', level: 1 });
+
+    waitFor(() => {
+      userEvent.click(searchButton);
+      expect(headerSearch).toBeInTheDocument();
+    });
+  });
 });

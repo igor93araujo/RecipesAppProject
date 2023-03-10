@@ -41,7 +41,7 @@ function DoneReceipes() {
 
   return (
     <section>
-      <Header title="Done Recipes" isIconProfile />
+      <Header title="Favorite Recipes" isIconProfile />
       <button
         type="button"
         data-testid="filter-by-all-btn"
@@ -69,6 +69,7 @@ function DoneReceipes() {
             data-testid={ `${index}-horizontal-image` }
             src={ recipe.image }
             alt={ recipe.name }
+            style={ { border: 'none', background: 'none', width: '200px' } }
           />
           <h3 data-testid={ `${index}-horizontal-top-text` }>
             {recipe.alcoholicOrNot}

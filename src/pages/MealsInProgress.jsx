@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import ButtonsFavoriteShare from '../components/ButtonsFavoriteShare';
 
@@ -12,7 +12,8 @@ function MealsInProgress({ match: { params: { id } } }) {
       },
   );
 
-  const ingredients = [];
+  const [allIngredientsChecked, setAllIngredientsChecked] = useState(false);
+  const ingredients = useMemo(() => [], []);
   const medidas = [];
   const limit = 8;
 
@@ -53,6 +54,15 @@ function MealsInProgress({ match: { params: { id } } }) {
       .then((data) => setDetails(data.meals));
   }, [id]);
 
+  useEffect(() => {
+    // Verifica se todos os ingredientes foram marcados como concluídos
+    const isAllIngredientsChecked = ingredients.slice(0, limit)
+      .every((ingredient) => (
+        inProgress.meals[id] && inProgress.meals[id].includes(ingredient)
+      ));
+    setAllIngredientsChecked(isAllIngredientsChecked);
+  }, [inProgress, ingredients, id, limit]);
+
   return (
     <section>
       <div>MealsInProgress</div>
@@ -66,7 +76,7 @@ function MealsInProgress({ match: { params: { id } } }) {
             alt={ detail.strMeal }
           />
           <h3>Ingredients</h3>
-          {ingredients.sort().slice(0, `${limit}`).map((ingredient, indice) => (
+          {ingredients.slice(0, `${limit}`).map((ingredient, indice) => (
             <div key={ indice }>
               <label
                 htmlFor={ `${indice}-ingredient-step` }
@@ -96,7 +106,7 @@ function MealsInProgress({ match: { params: { id } } }) {
       <button
         type="button"
         data-testid="finish-recipe-btn"
-        disabled
+        disabled={ !allIngredientsChecked }
       >
         Finish Recipe
       </button>

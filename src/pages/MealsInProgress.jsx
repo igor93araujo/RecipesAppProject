@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import ButtonsFavoriteShare from '../components/ButtonsFavoriteShare';
 
 function MealsInProgress({ match: { params: { id } } }) {
@@ -10,6 +11,11 @@ function MealsInProgress({ match: { params: { id } } }) {
         drinks: {},
         meals: {},
       },
+  );
+
+  const [doneFinish, setDoneFinish] = useState(
+    JSON.parse(localStorage.getItem('doneRecipes')) !== null
+      ? JSON.parse(localStorage.getItem('doneRecipes')) : [],
   );
 
   const [allIngredientsChecked, setAllIngredientsChecked] = useState(false);
@@ -63,6 +69,24 @@ function MealsInProgress({ match: { params: { id } } }) {
     setAllIngredientsChecked(isAllIngredientsChecked);
   }, [inProgress, ingredients, id, limit]);
 
+  const history = useHistory();
+  const handleFinishRecipe = () => {
+    const doneRecipe = {
+      id: details[0].idMeal,
+      nationality: details[0].strArea,
+      name: details[0].strMeal,
+      category: details[0].strCategory,
+      image: details[0].strMealThumb,
+      tags: details[0].strTags ? details[0].strTags.split(',') : [],
+      alcoholicOrNot: '',
+      type: 'meal',
+      doneDate: new Date().toISOString(),
+    };
+    setDoneFinish([...doneFinish, doneRecipe]);
+    localStorage.setItem('doneRecipes', JSON.stringify([...doneFinish, doneRecipe]));
+    history.push('/done-recipes');
+  };
+
   return (
     <section>
       <div>MealsInProgress</div>
@@ -107,6 +131,7 @@ function MealsInProgress({ match: { params: { id } } }) {
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ !allIngredientsChecked }
+        onClick={ () => handleFinishRecipe() }
       >
         Finish Recipe
       </button>

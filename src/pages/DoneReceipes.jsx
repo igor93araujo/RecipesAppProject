@@ -1,7 +1,10 @@
 import React from 'react';
 import Header from '../components/Header';
+import shareIcon from '../images/shareIcon.svg';
+import favoriteBtn from '../images/blackHeartIcon.svg';
 
 const FinishedRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+console.log(FinishedRecipes);
 
 function DoneReceipes() {
   return (
@@ -35,26 +38,40 @@ function DoneReceipes() {
           <h3 data-testid={ `${index}-horizontal-top-text` }>
             {recipe.alcoholicOrNot}
           </h3>
-          <h2 data-testid={ `${index}-horizontal-name` }>{recipe.name}</h2>
-          <h3 data-testid={ `${index}-horizontal-done-date` }>{recipe.doneDate}</h3>
-          <h3>
-            {
-              recipe.tags && recipe.tags.map((tag, tagIndex) => (
-                <span
-                  key={ tagIndex }
-                  data-testid={ `${index}-${tag}-horizontal-tag` }
-                >
-                  {tag}
-                </span>
-              ))
-            }
+          <h2 data-testid={ `${index}-horizontal-name` }>
+            {`Name: ${recipe.name}`}
+          </h2>
+          <h3 data-testid={ `${index}-horizontal-top-text` }>
+            {`Category-nationality: ${recipe.nationality} - ${recipe.category}`}
           </h3>
+          <h3 data-testid={ `${index}-horizontal-done-date` }>
+            {`Done in : ${recipe.doneDate}`}
+          </h3>
+          {
+            recipe.type === 'meal' && (
+              recipe.tags && recipe.tags.length > 0 && (
+                <h3 data-testid={ `${index}-horizontal-tag` }>
+                  {
+                    recipe.tags.map((tag, indexTag) => (
+                      <span
+                        key={ indexTag }
+                        data-testid={ `${index}-${tag}-horizontal-tag` }
+                      >
+                        {tag}
+                        {indexTag < recipe.tags.length - 1 && ', '}
+                      </span>
+                    ))
+                  }
+                </h3>
+              )
+            )
+          }
           <button
             type="button"
-            data-testid={ `${index}-horizontal-share-btn` }
           >
             <img
-              src="https://img.icons8.com/ios/50/000000/share--v1.png"
+              data-testid={ `${index}-horizontal-share-btn` }
+              src={ shareIcon }
               alt="share"
             />
           </button>
@@ -63,7 +80,7 @@ function DoneReceipes() {
             data-testid={ `${index}-horizontal-favorite-btn` }
           >
             <img
-              src="https://img.icons8.com/ios/50/000000/filled-like.png"
+              src={ favoriteBtn }
               alt="favorite"
             />
           </button>

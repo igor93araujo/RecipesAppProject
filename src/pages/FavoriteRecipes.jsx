@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import copy from 'clipboard-copy';
+import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import favoriteBtn from '../images/blackHeartIcon.svg';
@@ -39,6 +40,8 @@ function DoneReceipes() {
     setFilteredRecipes(recipies);
   };
 
+  const history = useHistory();
+
   return (
     <section>
       <Header title="Favorite Recipes" isIconProfile />
@@ -65,18 +68,27 @@ function DoneReceipes() {
       </button>
       {filteredRecipes && filteredRecipes.map((recipe, index) => (
         <div key={ index }>
-          <img
-            data-testid={ `${index}-horizontal-image` }
-            src={ recipe.image }
-            alt={ recipe.name }
-            style={ { border: 'none', background: 'none', width: '200px' } }
-          />
+          <button
+            type="button"
+            onClick={ () => { history.push(`/${recipe.type}s/${recipe.id}`); } }
+          >
+            <img
+              data-testid={ `${index}-horizontal-image` }
+              src={ recipe.image }
+              alt={ recipe.name }
+              style={ { border: 'none', background: 'none', width: '200px' } }
+            />
+          </button>
           <h3 data-testid={ `${index}-horizontal-top-text` }>
             {recipe.alcoholicOrNot}
           </h3>
-          <h2 data-testid={ `${index}-horizontal-name` }>
-            {`Name: ${recipe.name}`}
-          </h2>
+          <Link to={ `/${recipe.type}s/${recipe.id}` }>
+            <h2
+              data-testid={ `${index}-horizontal-name` }
+            >
+              {`Name: ${recipe.name}`}
+            </h2>
+          </Link>
           <h3 data-testid={ `${index}-horizontal-top-text` }>
             {`Category-nationality: ${recipe.nationality} - ${recipe.category}`}
           </h3>

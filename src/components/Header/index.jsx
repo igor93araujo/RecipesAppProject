@@ -6,16 +6,20 @@ import searchIcon from '../../images/searchIcon.svg';
 import './styles.css';
 import { AppContext } from '../../context/AppContext';
 
-function Header({ title, isIconProfile, isIconSearch }) {
+function Header({ title, isIconProfile, isIconSearch = false }) {
   const history = useHistory();
   const { visibleSearch, setVisibleSearch } = useContext(AppContext);
+
+  const redirectProfile = () => {
+    history.push('/profile');
+  };
 
   return (
     <header>
       { isIconProfile && (
         <button
           type="button"
-          onClick={ () => history.push('/profile') }
+          onClick={ () => redirectProfile() }
         >
           <img
             data-testid="profile-top-btn"
@@ -44,7 +48,7 @@ function Header({ title, isIconProfile, isIconSearch }) {
 Header.propTypes = {
   title: PropTypes.string.isRequired,
   isIconProfile: PropTypes.bool.isRequired,
-  isIconSearch: PropTypes.bool.isRequired,
+  isIconSearch: PropTypes.bool,
 };
 
 export default Header;

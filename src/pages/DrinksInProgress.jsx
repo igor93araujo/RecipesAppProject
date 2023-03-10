@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import ButtonsFavoriteShare from '../components/ButtonsFavoriteShare';
 
 function DrinksInProgress({ match: { params: { id } } }) {
@@ -63,6 +64,28 @@ function DrinksInProgress({ match: { params: { id } } }) {
     setAllIngredientsChecked(isAllIngredientsChecked);
   }, [inProgress, ingredients, id, limit]);
 
+  const history = useHistory();
+
+  const finishRecipe = () => {
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    localStorage.setItem('doneRecipes', JSON.stringify([
+      ...doneRecipes,
+      {
+        id,
+        type: history.location.pathname.includes('meals') ? 'meal' : 'drink',
+        nationality: details[0].strArea,
+        category: details[0].strCategory,
+        alcoholicOrNot: details[0].strAlcoholic || '',
+        name: details[0].strDrink,
+        image: details[0].strDrinkThumb,
+        doneDate: new Date().toLocaleDateString(),
+        tags: details[0].strTags ? details[0].strTags.split(',') : [],
+      },
+    ]));
+
+    history.push('/done-recipes');
+  };
+
   return (
     <section>
       <div>DrinksInProgress</div>
@@ -107,6 +130,7 @@ function DrinksInProgress({ match: { params: { id } } }) {
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ !allIngredientsChecked }
+        onClick={ () => finishRecipe() }
       >
         Finish Recipe
       </button>

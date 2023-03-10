@@ -61,6 +61,7 @@ function DoneReceipes() {
           >
             <img
               data-testid={ `${index}-horizontal-image` }
+              style={ { border: 'none', background: 'none', width: '200px' } }
               src={ recipe.image }
               alt={ recipe.name }
             />

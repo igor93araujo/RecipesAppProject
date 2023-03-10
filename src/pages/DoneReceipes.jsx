@@ -1,34 +1,56 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import favoriteBtn from '../images/blackHeartIcon.svg';
 
 const FinishedRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-console.log(FinishedRecipes);
 
 function DoneReceipes() {
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
+
+  const filterByMeals = () => {
+    const meals = FinishedRecipes.filter((recipe) => recipe.type === 'meal');
+    setFilteredRecipes(meals);
+  };
+
+  const filterByDrinks = () => {
+    const drinks = FinishedRecipes.filter((recipe) => recipe.type === 'drink');
+    setFilteredRecipes(drinks);
+  };
+
+  const filterByAll = () => {
+    setFilteredRecipes(FinishedRecipes);
+  };
+
+  useEffect(() => {
+    setFilteredRecipes(FinishedRecipes);
+  }, []);
+
   return (
     <section>
       <Header title="Done Recipes" isIconProfile />
       <button
         type="button"
         data-testid="filter-by-all-btn"
+        onClick={ () => filterByAll() }
       >
         All
       </button>
       <button
         type="button"
         data-testid="filter-by-meal-btn"
+        onClick={ () => filterByMeals() }
       >
         Meals
       </button>
       <button
         type="button"
         data-testid="filter-by-drink-btn"
+        onClick={ () => filterByDrinks() }
       >
         Drinks
       </button>
-      {FinishedRecipes && FinishedRecipes.map((recipe, index) => (
+      {filteredRecipes && filteredRecipes.map((recipe, index) => (
         <div key={ index }>
           <img
             data-testid={ `${index}-horizontal-image` }

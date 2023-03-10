@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import copy from 'clipboard-copy';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import favoriteBtn from '../images/blackHeartIcon.svg';
@@ -8,6 +9,7 @@ const FinishedRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
 
 function DoneReceipes() {
   const [filteredRecipes, setFilteredRecipes] = useState([]);
+  const [verification, setVerification] = useState(false);
 
   const filterByMeals = () => {
     const meals = FinishedRecipes.filter((recipe) => recipe.type === 'meal');
@@ -103,6 +105,10 @@ function DoneReceipes() {
           }
           <button
             type="button"
+            onClick={ () => {
+              copy(`http://localhost:3000/${recipe.type}s/${recipe.id}`);
+              setVerification(true);
+            } }
           >
             <img
               data-testid={ `${index}-horizontal-share-btn` }
@@ -121,6 +127,11 @@ function DoneReceipes() {
           </button>
         </div>
       ))}
+      <h4>
+        {
+          !verification ? '' : 'Link copied!'
+        }
+      </h4>
     </section>
   );
 }

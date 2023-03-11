@@ -95,25 +95,6 @@ function DoneReceipes() {
           <h3 data-testid={ `${index}-horizontal-done-date` }>
             {`Done in : ${recipe.doneDate}`}
           </h3>
-          {
-            recipe.type === 'meal' && (
-              recipe.tags && recipe.tags.length > 0 && (
-                <h3 data-testid={ `${index}-horizontal-tag` }>
-                  {
-                    recipe.tags.map((tag, indexTag) => (
-                      <span
-                        key={ indexTag }
-                        data-testid={ `${index}-${tag}-horizontal-tag` }
-                      >
-                        {tag}
-                        {indexTag < recipe.tags.length - 1 && ', '}
-                      </span>
-                    ))
-                  }
-                </h3>
-              )
-            )
-          }
           <button
             type="button"
             onClick={ () => {

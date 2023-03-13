@@ -1,0 +1,12 @@
+.categoryFilters {
+  align-items: center;
+  display: flex;
+  flex-flow: wrap-reverse;
+  gap: 10px;
+  justify-content: center;
+  width: 100vw;
+}
+
+.categoryFilters button {
+  background-color: transparent;
+}

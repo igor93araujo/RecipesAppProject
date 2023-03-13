@@ -1,10 +1,13 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import profileIcon from '../../images/profileIcon.svg';
-import searchIcon from '../../images/searchIcon.svg';
+import profileIcon from '../../images/icone-perfil.svg';
 import './styles.css';
 import { AppContext } from '../../context/AppContext';
+import appIcon from '../../images/appIcon.png';
+import recipesApp from '../../images/recipesApp.svg';
+import iconePesquisar from '../../images/iconePesquiar.svg';
+import plateIcon from '../../images/icone-prato.svg';
 
 function Header({ title, isIconProfile, isIconSearch = false }) {
   const history = useHistory();
@@ -15,33 +18,45 @@ function Header({ title, isIconProfile, isIconSearch = false }) {
   };
 
   return (
-    <header>
-      { isIconProfile && (
-        <button
-          type="button"
-          onClick={ () => redirectProfile() }
-        >
-          <img
-            data-testid="profile-top-btn"
-            src={ profileIcon }
-            alt="profile icon"
-          />
-        </button>
-      )}
-      <h1 data-testid="page-title">{title}</h1>
-      { isIconSearch && (
-        <button
-          type="button"
-          onClick={ () => setVisibleSearch(!visibleSearch) }
-        >
-          <img
-            data-testid="search-top-btn"
-            src={ searchIcon }
-            alt="search icon"
-          />
-        </button>
-      )}
-    </header>
+    <>
+      <header>
+        <div className="leftElements">
+          <img src={ appIcon } alt="icon" className="appIcon" />
+          <img src={ recipesApp } alt="title" className="appTitle" />
+        </div>
+        <div>
+          {isIconSearch && (
+            <button
+              type="button"
+              onClick={ () => setVisibleSearch(!visibleSearch) }
+            >
+              <img
+                data-testid="search-top-btn"
+                src={ iconePesquisar }
+                alt="search icon"
+              />
+            </button>
+          )}
+          {isIconProfile && (
+            <button
+              type="button"
+              onClick={ () => redirectProfile() }
+            >
+              <img
+                data-testid="profile-top-btn"
+                src={ profileIcon }
+                alt="profile icon"
+              />
+            </button>
+          )}
+        </div>
+      </header>
+      <div className="secondContainer">
+        <img src={ plateIcon } alt="" />
+        <h1 data-testid="page-title">{title}</h1>
+      </div>
+
+    </>
   );
 }
 

@@ -1,5 +1,68 @@
 header {
+  align-items: center;
+  background-color: #fcdc36;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: space-between;
-  margin-bottom: 1%;
+  position: fixed;
+  top: 0;
+  width: 100%;
 }
+
+header button {
+  background-color: transparent;
+  border: none;
+  height: 70px;
+  padding: 0;
+  width: 70px;
+}
+
+.secondContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 150px;
+  justify-content: center;
+  margin-top: 70px;
+  width: 100%;
+}
+
+.secondContainer h1 {
+  color: #41197f;
+  font-family: epilogue , sans-serif;
+  font-size: 2rem;
+  font-weight: 900;
+  margin: 0;
+}
+
+.secondContainer img {
+  width: 60px;
+}
+
+.leftElements {
+  align-items: center;
+  display: flex;
+  justify-content: space-around;
+  width: 50%;
+}
+
+.appIcon {
+  width: 60px;
+}
+
+.appTitle {
+  width: 20%;
+}
+
+@media screen and ( max-width : 768px ) {
+
+  .leftElements {
+    width: 50%;
+  }
+
+  .appTitle {
+    width: 50%;
+  }
+}
+

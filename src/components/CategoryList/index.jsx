@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
+import './index.css';
 
 function CategoryList() {
   const {
@@ -82,7 +83,7 @@ function CategoryList() {
   };
 
   return (
-    <div>
+    <div className="categoryFilters">
       { location.pathname === '/meals'
         ? categoryArrayMeals && categoryArrayMeals.slice(0, limit).map((meal, index) => (
           <button

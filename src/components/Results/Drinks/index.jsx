@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { AppContext } from '../../../context/AppContext';
+import '../styles.css';
 
 export default function DrinksResult() {
   const [inicialArray, setInicialArray] = useState([]);

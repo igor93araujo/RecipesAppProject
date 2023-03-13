@@ -2,21 +2,52 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 0 auto;
-  max-width: 1200px;
-  padding: 0 20px;
+  max-width: 80%;
+  overflow-x: hidden;
+  padding: 20px;
 }
 
 .meal {
-  background-color: white;
   border-radius: 10px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   margin: 20px;
-  padding: 20px;
-  text-align: center;
   width: 300px;
 }
 
-.meal img {
-  width: 200px;
+.meal p {
+  font-size: 1.2rem;
+  margin: 0;
+  padding: 10px 20px;
+  text-align: left;
 }
+
+.meal button {
+  background-color: white;
+  border: 1px solid rgb(191, 183, 183);
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 0;
+  width: 100%;
+}
+
+.meal img {
+  border-radius: 10px 10px 0 0;
+  width: 100%;
+}
+
+@media screen and ( max-width : 768px ) {
+
+  .mealsResults {
+    margin: 0;
+    margin-top: 5%;
+    min-width: 100vw;
+    padding: 0 0 10%;
+  }
+
+  .meal {
+    margin: 5px;
+    margin-bottom: 5%;
+    width: 250px;
+  }
+}
+

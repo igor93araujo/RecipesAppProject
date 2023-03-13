@@ -12,7 +12,7 @@ import './Meals.css';
 function Meals() {
   return (
     <section className="mealsContainer">
-      <Header title="Meals" isIconProfile isIconSearch />
+      <Header title="MEALS" isIconProfile isIconSearch />
       <SearchBar />
       <CategoryList />
       <MealsResult />

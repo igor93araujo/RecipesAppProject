@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import './ButtonStartRecipe.css';
 
 export default function ButtonStartRecipe({ url, id }) {
   const history = useHistory();
@@ -15,7 +16,6 @@ export default function ButtonStartRecipe({ url, id }) {
     <button
       type="button"
       data-testid="start-recipe-btn"
-      style={ { position: 'fixed', bottom: '0', right: '50%' } }
       onClick={ () => handleClick() }
     >
       Continue Recipe

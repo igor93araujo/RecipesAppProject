@@ -2,6 +2,11 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 
+import './Login.css';
+
+import tomate from '../images/tomate.png';
+import logo from '../images/logo.png';
+
 export default function Login() {
   const {
     email,
@@ -44,30 +49,46 @@ export default function Login() {
   const verifyBtn = !(validaEmail && validaPassword);
 
   return (
-    <>
-      <h1>Login</h1>
-      <input
-        type="email"
-        data-testid="email-input"
-        value={ email }
-        name="email"
-        onChange={ verifyEmail }
-      />
-      <input
-        type="password"
-        data-testid="password-input"
-        value={ password }
-        name="password"
-        onChange={ verifyPassword }
-      />
-      <button
-        type="button"
-        data-testid="login-submit-btn"
-        disabled={ verifyBtn }
-        onClick={ handleClick }
-      >
-        Enter
-      </button>
-    </>
+    <section className="login_page">
+      <div className="login_top">
+        <img
+          src={ logo }
+          alt="logo"
+          className="logo_img"
+        />
+        <img
+          src={ tomate }
+          alt="tomate"
+          className="tomate_img"
+        />
+      </div>
+      <div className="login_text">
+        <h1>LOGIN</h1>
+        <input
+          type="email"
+          data-testid="email-input"
+          value={ email }
+          name="email"
+          onChange={ verifyEmail }
+          placeholder="Email"
+        />
+        <input
+          type="password"
+          data-testid="password-input"
+          value={ password }
+          name="password"
+          onChange={ verifyPassword }
+          placeholder="Password"
+        />
+        <button
+          type="button"
+          data-testid="login-submit-btn"
+          disabled={ verifyBtn }
+          onClick={ handleClick }
+        >
+          ENTER
+        </button>
+      </div>
+    </section>
   );
 }

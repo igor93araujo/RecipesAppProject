@@ -1,0 +1,11 @@
+button {
+  background-color: rgba(252, 196, 54, 1);
+  border: none;
+  bottom: '0';
+  color: white;
+  font-weight: 700;
+  height: 40px;
+  margin-bottom: 5%;
+  position: 'fixed';
+  width: 80%;
+}

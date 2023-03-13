@@ -62,7 +62,7 @@ function ButtonsFavoriteShare({ id, type }) {
   };
 
   return (
-    <div>
+    <div className="shareNFavorite">
       <button
         type="button"
         data-testid="share-btn"
@@ -77,19 +77,21 @@ function ButtonsFavoriteShare({ id, type }) {
       <button
         type="button"
         onClick={ addFavorite }
-        className="favorite"
       >
         <img
           data-testid="favorite-btn"
           src={ favorite ? blackHeartIcon : whiteHeartIcon }
           alt="favorite"
+          style={ { height: '20px', width: '20px' } }
         />
       </button>
-      {
-        !checkTheLinkCopied
-          ? ''
-          : <p>Link copied!</p>
-      }
+      <div className="copyLink">
+        {
+          !checkTheLinkCopied
+            ? ''
+            : <p>Link copied!</p>
+        }
+      </div>
     </div>
   );
 }

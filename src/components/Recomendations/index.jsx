@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import './Carousel.css';
 
 export default function Recomendations() {
@@ -31,8 +31,8 @@ export default function Recomendations() {
   }, [history.location.pathname]);
 
   return (
-    <div>
-      <h1>Sugestions</h1>
+    <div className="sugestions">
+      <h1>Recommended</h1>
       <div className="carousel">
         <div
           className="innerCarousel"
@@ -55,7 +55,12 @@ export default function Recomendations() {
 
                     </p>
                   </div>
-                  <img src={ meal.strDrinkThumb } alt={ meal.strDrink } />
+                  <Link to={ `/drinks/${meal.idDrink}` }>
+                    <img
+                      src={ meal.strDrinkThumb }
+                      alt={ meal.strDrink }
+                    />
+                  </Link>
                 </div>
               ))
               : mealsRecomendation.map((meal, index) => (
@@ -71,7 +76,9 @@ export default function Recomendations() {
 
                     </p>
                   </div>
-                  <img src={ meal.strMealThumb } alt={ meal.strMeal } />
+                  <Link to={ `/meals/${meal.idMeal}` }>
+                    <img src={ meal.strMealThumb } alt={ meal.strMeal } />
+                  </Link>
                 </div>
               ))
           }

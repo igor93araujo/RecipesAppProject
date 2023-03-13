@@ -1,8 +1,7 @@
 .carousel {
   display: flex;
   flex-direction: column;
-  margin: auto;
-  max-width: 400px;
+  width: 300px;
 }
 
 .innerCarousel {
@@ -13,11 +12,19 @@
   white-space: nowrap;
 }
 
-.innerCarousel div:nth-child( n+3 ):nth-child( n-6 ) {
+/* .innerCarousel div:nth-child( n+3 ):nth-child( n-6 ) {
   display: none;
-}
+} */
 
 
 .carousel img {
-  width: 200px;
+  margin-right: 5px;
+  width: 150px;
+}
+
+.sugestions {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20%;
+  padding: 0 10px;
 }

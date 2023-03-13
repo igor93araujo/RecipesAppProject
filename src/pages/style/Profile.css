@@ -1,0 +1,45 @@
+.main-profile {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+hr {
+  border: 0.5px solid #b1b1b1;
+  width: 200px;
+}
+
+.main-profile p {
+  color: #1a1b1c;
+  font-family: Arial  Helvetica , sans-serif;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 16px;
+  margin: -2px 0 35px;
+  text-align: center;
+}
+
+.main-profile button {
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  color: #797d86;
+  display: flex;
+  font-family: Arial Helvetica , sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  gap: 12px;
+  height: 38.69px;
+  letter-spacing: 0.03em;
+  line-height: 16px;
+  text-transform: capitalize;
+  width: 217.44px;
+}
+
+.img-profile {
+  height: 30.69px;
+  width: 30.43px;
+}

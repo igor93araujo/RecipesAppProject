@@ -1,0 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat&family=Inknut+Antiqua&family=Roboto:wght@400;700&display=swap') ;
+
+body {
+  background-color: whitesmoke;
+  font-family: Roboto , sans-serif;
+}
+
+.login_page {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  position: relative;
+  width: 100vw;
+}
+
+.login_top {
+  align-items: center;
+  background-color: #41197f;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: space-between;
+  width: 30vw;
+}
+
+.logo_img {
+  max-width: 200px;
+  position: absolute;
+  top: 5%;
+}
+
+.tomate_img {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  width: 30%;
+}
+
+.login_text {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
+
+.login_text input {
+  border: 0.1px solid #41197f;
+  border-radius: 5px;
+  color: black;
+  font-family: Roboto , sans-serif;
+  font-size: 15px;
+  font-weight: 200;
+  height: 40px;
+  margin-bottom: 2%;
+  padding: 0 10px;
+  width: 60%;
+}
+
+.login_text input::placeholder {
+  color: #41197f;
+  font-family: Roboto , sans-serif;
+  font-size: 15px;
+  font-weight: 100;
+}
+
+.login_text button {
+  background-color: #fcc436;
+  border: 0.1px solid #fcc436;
+  border-radius: 5px;
+  color: white;
+  font-family: Roboto , sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  height: 40px;
+  margin-bottom: 2%;
+  padding: 0 10px;
+  width: 60%;
+}
+
+.login_text h1 {
+  color: #41197f;
+  font-family: Roboto , sans-serif;
+  font-size: 70px;
+  font-style: italic;
+  font-weight: 200;
+  margin-bottom: 5%;
+  text-align: center;
+}
+
+@media screen and ( max-width : 767px ) {
+
+  .login_page {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    position: relative;
+    width: 100vw;
+  }
+
+  .login_top {
+    align-items: center;
+    background-color: #41197f;
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .logo_img {
+    max-width: 200px;
+    position: absolute;
+    top: 5%;
+  }
+
+  .tomate_img {
+    margin-left: 0;
+    position: relative;
+    top: 40%;
+    width: 100%;
+  }
+
+  .login_text {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    height: 50vh;
+    justify-content: center;
+    width: 100%;
+    z-index: 99;
+  }
+
+  .login_text h1 {
+    color: #41197f;
+    font-family: Epilogue , sans-serif;
+    font-size: 25px;
+    font-style: italic;
+    font-weight: 200;
+    margin-bottom: 5%;
+    text-align: center;
+  }
+
+  .login_text input {
+    border: 0.1px solid #41197f;
+    border-radius: 5px;
+    color: black;
+    font-family: Epilogue , sans-serif;
+    font-size: 15px;
+    font-weight: 200;
+    height: 40px;
+    margin-bottom: 2%;
+    padding: 0 10px;
+    width: 80%;
+  }
+
+  .login_text input::placeholder {
+    color: #41197f;
+    font-family: Epilogue , sans-serif;
+    font-size: 15px;
+    font-weight: 100;
+  }
+
+  .login_text button {
+    background-color: #fcc436;
+    border: 0.1px solid #fcc436;
+    border-radius: 5px;
+    color: white;
+    font-family: Epilogue , sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    height: 40px;
+    margin-bottom: 2%;
+    padding: 0 10px;
+    width: 80%;
+  }
+}
+

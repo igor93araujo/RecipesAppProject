@@ -2,8 +2,8 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  max-width: 80%;
-  overflow-x: hidden;
+  margin-bottom: 5%;
+  max-width: 100%;
   padding: 20px;
 }
 
@@ -15,6 +15,7 @@
 }
 
 .meal p {
+  color: black;
   font-size: 1rem;
   margin: 0;
   padding: 5px 10px;
@@ -23,9 +24,10 @@
 
 .meal button {
   background-color: white;
-  border: 1px solid rgb(191, 183, 183);
+  border: 0.5px solid rgb(115, 115, 115);
   border-radius: 10px;
   cursor: pointer;
+  height: 100%;
   padding: 0;
   width: 100%;
 }
@@ -39,6 +41,7 @@
 
   .mealsResults {
     margin: 0;
+    margin-bottom: 10%;
     margin-top: 5%;
     min-width: 100vw;
     padding: 0 0 10%;
@@ -46,7 +49,7 @@
 
   .meal {
     margin: 5px;
-    margin-bottom: 10%;
+    margin-bottom: 5%;
     width: 150px;
   }
 }

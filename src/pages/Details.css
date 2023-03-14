@@ -2,6 +2,7 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  padding-bottom: 10%;
   width: 100vw;
 }
 
@@ -75,20 +76,19 @@
 .ingredientsList ul {
   border: 1px solid rgb(165, 165, 165);
   border-radius: 10px;
-  margin: 1%;
+  margin: 1% 1% 10%;
   padding-left: 10% 0 0 10%;
 }
 
 .ingredientsList p {
   border: 1px solid rgb(165, 165, 165);
   border-radius: 10px;
-  margin: 1%;
+  margin: 1% 1% 10%;
   padding: 5% 3% 3% 5%;
   text-align: justify;
 }
 
 .react-player {
-  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;

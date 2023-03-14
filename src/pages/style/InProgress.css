@@ -2,8 +2,9 @@
   align-items: center;
   display: flex;
   flex-direction: column;
+  margin: auto;
   padding-bottom: 10%;
-  width: 100vw;
+  width: 50%;
 }
 
 .category {
@@ -25,7 +26,7 @@
   height: 20vh;
   justify-content: center;
   position: relative;
-  width: 100vw;
+  width: 100%;
 }
 
 .itemInfos {
@@ -34,7 +35,6 @@
   justify-content: center;
   margin-bottom: 10%;
   margin-top: 15%;
-  padding: 5% 4%;
   width: 100%;
 }
 
@@ -75,7 +75,40 @@
   bottom: 0;
   color: white;
   font-size: 1.5rem;
-  padding: 2% 0;
   position: fixed;
-  width: 100%;
+  width: 40%;
+}
+
+@media screen and ( max-width : 768px ) {
+
+  .detailBanner {
+    height: 20vh;
+  }
+
+  .itemInfos {
+    font-size: 10px;
+    margin-top: 10%;
+    padding: 5% 4%;
+  }
+
+  .ingredientsList {
+    margin-bottom: 10%;
+  }
+
+  .steps {
+    margin-bottom: 10%;
+  }
+
+  .instructionsList {
+    margin-bottom: 10%;
+  }
+
+  .inProgressContainer {
+    margin: none;
+    width: 100%;
+  }
+
+  .finishRecipeBtn {
+    font-size: 15px;
+  }
 }

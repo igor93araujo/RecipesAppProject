@@ -1,7 +1,6 @@
 .carousel {
   display: flex;
   flex-direction: column;
-  width: 90vw;
 }
 
 .innerCarousel {
@@ -28,8 +27,18 @@
   justify-content: center;
   margin-bottom: 20%;
   padding: 5%;
+  width: 100%;
 }
 
 .sugestions h2 {
   margin-bottom: 10px;
+}
+
+@media screen and ( max-width : 768px ) {
+
+  .carousel {
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+  }
 }

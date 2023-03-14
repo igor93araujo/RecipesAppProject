@@ -19,12 +19,12 @@ function Header({ title, isIconProfile, isIconSearch = false }) {
 
   return (
     <>
-      <header title='Meals'>
+      <header title="Meals">
         <div className="leftElements">
           <img src={ appIcon } alt="icon" className="appIcon" />
           <img src={ recipesApp } alt="title" className="appTitle" />
         </div>
-        <div>
+        <div className="rightElements">
           {isIconSearch && (
             <button
               type="button"

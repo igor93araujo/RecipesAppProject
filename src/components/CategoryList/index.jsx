@@ -84,6 +84,13 @@ function CategoryList() {
 
   return (
     <div className="categoryFilters">
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ () => handleClickAll() }
+      >
+        All
+      </button>
       { location.pathname === '/meals'
         ? categoryArrayMeals && categoryArrayMeals.slice(0, limit).map((meal, index) => (
           <button
@@ -106,13 +113,6 @@ function CategoryList() {
               {drink.strCategory}
             </button>
           ))}
-      <button
-        type="button"
-        data-testid="All-category-filter"
-        onClick={ () => handleClickAll() }
-      >
-        All
-      </button>
     </div>
   );
 }

@@ -11,7 +11,7 @@ import SearchBar from '../components/SearchBar';
 
 function Drinks() {
   return (
-    <section>
+    <section className="mealsContainer">
       <Headers title="Drinks" isIconProfile isIconSearch />
       <SearchBar />
       <CategoryList />

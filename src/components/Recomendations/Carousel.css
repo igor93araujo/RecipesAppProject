@@ -1,7 +1,7 @@
 .carousel {
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 90vw;
 }
 
 .innerCarousel {
@@ -10,21 +10,26 @@
   overflow-x: scroll;
   text-align: center;
   white-space: nowrap;
+  width: 100%;
 }
 
-/* .innerCarousel div:nth-child( n+3 ):nth-child( n-6 ) {
-  display: none;
-} */
-
-
 .carousel img {
+  border-radius: 10px;
   margin-right: 5px;
-  width: 150px;
+  width: 100px;
 }
 
 .sugestions {
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 20px 25px -5px , rgba(0, 0, 0, 0.04) 0 10px 10px -5px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   margin-bottom: 20%;
-  padding: 0 10px;
+  padding: 5%;
+}
+
+.sugestions h2 {
+  margin-bottom: 10px;
 }

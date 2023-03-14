@@ -1,16 +1,17 @@
 .categoryFilters {
   align-items: center;
   display: flex;
-  flex-flow: wrap-reverse;
+  flex-flow: wrap;
   gap: 10px;
   justify-content: center;
-  width: 100vw;
 }
 
 .categoryFilters button {
   background-color: transparent;
   border: none;
   border-bottom: 1px solid rgb(215, 215, 16);
+  color: rgb(98, 53, 224);
+  width: fit-content;
 }
 
 .categoryFilters button:focus {

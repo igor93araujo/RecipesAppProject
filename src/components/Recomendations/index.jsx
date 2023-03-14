@@ -9,17 +9,20 @@ export default function Recomendations() {
   const history = useHistory();
 
   const maxElements = 6;
+  const magicNumber = 0.5;
 
   const fetchMealsRecomendations = async () => {
     const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
     const data = await response.json();
-    setMealsRecomendation(data.meals.slice(0, maxElements));
+    setMealsRecomendation(data.meals
+      .slice(0, maxElements).sort(() => Math.random() - magicNumber));
   };
 
   const fetchDrinksRecomendations = async () => {
     const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
     const data = await response.json();
-    setDrinksRecomendation(data.drinks.slice(0, maxElements));
+    setDrinksRecomendation(data.drinks.slice(0, maxElements)
+      .sort(() => Math.random() - magicNumber));
   };
 
   useEffect(() => {
@@ -32,7 +35,7 @@ export default function Recomendations() {
 
   return (
     <div className="sugestions">
-      <h1>Recommended</h1>
+      <h2>Recommended</h2>
       <div className="carousel">
         <div
           className="innerCarousel"

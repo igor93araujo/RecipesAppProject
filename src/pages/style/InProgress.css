@@ -1,0 +1,81 @@
+.inProgressContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 10%;
+  width: 100vw;
+}
+
+.category {
+  align-items: center;
+  color: rgba(252, 196, 54, 1);
+  display: flex;
+  font-size: 1rem;
+  position: absolute;
+  top: 2%;
+}
+
+.title {
+  visibility: hidden;
+}
+
+.detailBanner {
+  display: flex;
+  flex-direction: column;
+  height: 20vh;
+  justify-content: center;
+  position: relative;
+  width: 100vw;
+}
+
+.itemInfos {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 10%;
+  margin-top: 15%;
+  padding: 5% 4%;
+  width: 100%;
+}
+
+.detailBanner img {
+  filter: brightness(50%);
+  object-fit: cover;
+  object-position: 100% 50%;
+  overflow: hidden;
+  width: 100%;
+  z-index: -1;
+}
+
+.ingredientsList {
+  border: 1px solid rgb(165, 165, 165);
+  border-radius: 10px;
+  margin-bottom: 10%;
+  padding: 2% 0 3% 3%;
+  width: 100%;
+}
+
+.steps {
+  border: 1px solid rgb(165, 165, 165);
+  border-radius: 10px;
+  margin-bottom: 10%;
+  padding: 2% 0 3% 3%;
+  width: 100%;
+}
+
+.instructionsList {
+  border: 1px solid rgb(165, 165, 165);
+  border-radius: 10px;
+  padding: 2% 0 3% 3%;
+}
+
+.finishRecipeBtn {
+  background-color: rgba(252, 196, 54, 1);
+  border: none;
+  bottom: 0;
+  color: white;
+  font-size: 1.5rem;
+  padding: 2% 0;
+  position: fixed;
+  width: 100%;
+}

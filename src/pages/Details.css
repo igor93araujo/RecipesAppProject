@@ -7,41 +7,48 @@
 }
 
 .detailMealsTitle {
+  position: absolute;
   visibility: hidden;
 }
 
 .itemDetail {
-  align-items: center;
   display: flex;
   flex-direction: column;
+  height: fit-content;
   justify-content: center;
-  width: 100%;
+  width: 90%;
 }
 
-.itemDetail img {
-  width: 350px;
-}
-
-.detailImg {
-  height: 20%;
-  position: absolute;
-  top: 0;
+.detailBanner {
+  display: flex;
+  flex-direction: column;
+  height: 20vh;
+  justify-content: center;
+  position: relative;
   width: 100vw;
 }
 
-.detailImg img {
+.detailBanner img {
   filter: brightness(50%);
-  height: 100%;
   object-fit: cover;
+  object-position: 100% 50%;
+  overflow: hidden;
   width: 100%;
+  z-index: -1;
+}
 
+.recipeTitle {
+  color: white;
+  left: 40%;
+  position: absolute;
+  z-index: 1;
 }
 
 .itemInfos {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 40%;
+  margin-top: 10%;
   padding: 4% 2%;
   width: 90%;
 }
@@ -67,28 +74,16 @@
   width: 20%;
 }
 
-.ingredientsList h2 {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-  margin-left: 10px;
-}
-
-.ingredientsList ul {
+.ingredientsList {
   border: 1px solid rgb(165, 165, 165);
   border-radius: 10px;
-  margin: 1% 1% 10%;
-  padding-left: 10% 0 0 10%;
-}
-
-.ingredientsList p {
-  border: 1px solid rgb(165, 165, 165);
-  border-radius: 10px;
-  margin: 1% 1% 10%;
-  padding: 5% 3% 3% 5%;
-  text-align: justify;
+  margin-bottom: 10%;
+  padding: 2% 0 3% 3%;
+  width: 100%;
 }
 
 .react-player {
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -38,16 +38,21 @@ export default function DetailsDrinks({ match: { params: { id } } }) {
         detailsDrink.length > 0
           ? (
             <>
-              <div className="detailImg">
+              <div className="detailBanner">
                 <img
                   src={ detailsDrink[0].strDrinkThumb }
                   alt={ detailsDrink[0].strImageAttribution }
                   data-testid="recipe-photo"
                 />
+                <h1
+                  data-testid="recipe-title"
+                  className="recipeTitle"
+                >
+                  {detailsDrink[0].strDrink}
+                </h1>
               </div>
               <div className="itemDetail">
                 <div className="itemInfos">
-                  <h1 data-testid="recipe-title">{detailsDrink[0].strDrink}</h1>
                   <div className="category">
                     <p data-testid="recipe-category">{detailsDrink[0].strAlcoholic}</p>
                   </div>

@@ -88,16 +88,21 @@ export default function DetailsMeals({ match: { params: { id } } }) {
         detailsMeals.length > 0
           ? (
             <>
-              <div className="detailImg">
+              <div className="detailBanner">
                 <img
                   src={ detailsMeals[0].strMealThumb }
                   alt={ detailsMeals[0].strMeal }
                   data-testid="recipe-photo"
                 />
+                <h1
+                  data-testid="recipe-title"
+                  className="recipeTitle"
+                >
+                  {detailsMeals[0].strMeal}
+                </h1>
               </div>
               <div className="itemDetail">
                 <div className="itemInfos">
-                  <h1 data-testid="recipe-title">{detailsMeals[0].strMeal}</h1>
                   <div className="category">
                     <img
                       src={ setCategory(detailsMeals[0].strCategory) }
@@ -125,7 +130,7 @@ export default function DetailsMeals({ match: { params: { id } } }) {
                       })}
                     </ul>
                   </div>
-                  <div className="ingredientsList">
+                  <div className="instructionsList">
                     <h2>Instructions</h2>
                     <p data-testid="instructions">{detailsMeals[0].strInstructions}</p>
                   </div>
@@ -140,7 +145,7 @@ export default function DetailsMeals({ match: { params: { id } } }) {
                           playerVars: { showinfo: 1 },
                         },
                       } }
-                      width="300px"
+                      width="90%"
                       data-testid="video"
                     />
                   </div>

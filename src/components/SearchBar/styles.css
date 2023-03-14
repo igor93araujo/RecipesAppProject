@@ -1,16 +1,25 @@
+.fullContainer {
+  align-items: center;
+  animation: searchBox 0.5s ease;
+  background-color: #41197f;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 5%;
+  max-width: 500px;
+  width: 100%;
+}
+
 .searchContainer {
   align-items: center;
-  background-color: #41197f;
   border-radius: 0 0 10px 10px;
   color: white;
   display: flex;
   flex-direction: column;
   height: 100%;
   justify-content: center;
-  margin-bottom: 5%;
   max-width: 500px;
-  padding-bottom: 5%;
-  width: 100%;
 }
 
 .search-input {
@@ -48,4 +57,17 @@
   font-weight: 700;
   padding: 0.5rem;
   width: 80%;
+}
+
+
+@keyframes searchBox {
+
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+
 }

@@ -29,6 +29,7 @@ export default function ButtonStartRecipe({ url, id }) {
       type="button"
       data-testid="start-recipe-btn"
       onClick={ () => handleClick() }
+      className="startRecipe"
     >
       {recipeStarted ? 'Continue recipe' : 'Start recipe'}
     </button>

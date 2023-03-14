@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import ButtonsFavoriteShare from '../components/ButtonsFavoriteShare';
+import './style/InProgress.css';
 
 function DrinksInProgress({ match: { params: { id } } }) {
   const [details, setDetails] = useState([]);
@@ -89,42 +90,58 @@ function DrinksInProgress({ match: { params: { id } } }) {
   };
 
   return (
-    <section>
-      <div>DrinksInProgress</div>
+    <section className="inProgressContainer">
+      <div className="detailMealsTitle">DrinksInProgress</div>
       {details && details.map((detail, index) => (
         <div key={ index }>
-          <h1 data-testid="recipe-title">{detail.strDrinks}</h1>
-          <h2 data-testid="recipe-category">{detail.strCategory}</h2>
-          <img
-            data-testid="recipe-photo"
-            src={ detail.strDrinkThumb }
-            alt={ detail.strDrinks }
-          />
-          <h3>Ingredients</h3>
-          {ingredients.slice(0, `${limit}`).map((ingredient, indice) => (
-            <div key={ indice }>
-              <label
-                htmlFor={ `${indice}-ingredient-step` }
-                data-testid={ `${indice}-ingredient-step` }
-                className={ inProgress.drinks[id]
-                && inProgress.drinks[id].includes(ingredient) ? 'done' : '' }
-              >
-                {ingredient}
-                -
-                {medidas[indice]}
-                <input
-                  type="checkbox"
-                  id={ `${indice}-ingredient-step` }
-                  value={ ingredient }
-                  onChange={ (e) => doneStep(e) }
-                  checked={ inProgress.drinks[id]
-                  && inProgress.drinks[id].includes(ingredient) }
-                />
-              </label>
+          <div className="detailBanner">
+            <img
+              data-testid="recipe-photo"
+              src={ detail.strDrinkThumb }
+              alt={ detail.strDrinks }
+            />
+            <h1
+              className="recipeTitle"
+              data-testid="recipe-title"
+            >
+              {detail.strDrinks}
+
+            </h1>
+          </div>
+          <div className="itemInfos">
+            <div className="category">
+              <h2 data-testid="recipe-category">{detail.strCategory}</h2>
             </div>
-          ))}
-          <h3>Instructions</h3>
-          <p data-testid="instructions">{detail.strInstructions}</p>
+            <div className="steps">
+              <h3>Ingredients</h3>
+              {ingredients.slice(0, `${limit}`).map((ingredient, indice) => (
+                <div key={ indice }>
+                  <label
+                    htmlFor={ `${indice}-ingredient-step` }
+                    data-testid={ `${indice}-ingredient-step` }
+                    className={ inProgress.drinks[id]
+                && inProgress.drinks[id].includes(ingredient) ? 'done' : '' }
+                  >
+                    {ingredient}
+                    -
+                    {medidas[indice]}
+                    <input
+                      type="checkbox"
+                      id={ `${indice}-ingredient-step` }
+                      value={ ingredient }
+                      onChange={ (e) => doneStep(e) }
+                      checked={ inProgress.drinks[id]
+                  && inProgress.drinks[id].includes(ingredient) }
+                    />
+                  </label>
+                </div>
+              ))}
+            </div>
+            <div className="instructionsList">
+              <h3>Instructions</h3>
+              <p data-testid="instructions">{detail.strInstructions}</p>
+            </div>
+          </div>
         </div>
       ))}
       <ButtonsFavoriteShare id={ id } type={ details } />
@@ -133,6 +150,7 @@ function DrinksInProgress({ match: { params: { id } } }) {
         data-testid="finish-recipe-btn"
         disabled={ !allIngredientsChecked }
         onClick={ () => handleFinishRecipe() }
+        className="finishRecipeBtn"
       >
         Finish Recipe
       </button>

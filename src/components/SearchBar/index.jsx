@@ -94,7 +94,7 @@ export default function SearchBar() {
     <div>
       {
         visibleSearch && (
-          <>
+          <div className="fullContainer">
             <input
               data-testid="search-input"
               type="text"
@@ -157,7 +157,7 @@ export default function SearchBar() {
               </button>
             </div>
 
-          </>
+          </div>
         )
       }
     </div>

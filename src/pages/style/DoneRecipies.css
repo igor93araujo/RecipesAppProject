@@ -1,0 +1,157 @@
+.recipie-done {
+  background-color: #e2e2e4;
+  border: 1px solid #b1b1b1;
+  border-radius: 5px;
+  display: flex;
+  height: 200px;
+  justify-content: center;
+  width: 340px;
+}
+
+section nav {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 35px;
+}
+
+.btn-filter-done {
+  background-color: transparent;
+  border: none;
+  color: #797d86;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 9px;
+  text-align: center;
+}
+
+.btn-filter-done:hover {
+  background-color: #41197f;
+  color: #fcc436;
+  padding: 10px;
+  transition: 0.5s;
+}
+
+.buttons-recipies-done {
+  display: flex;
+}
+
+.recipie-done button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+.all-recipies-dones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  justify-content: center;
+  margin: auto;
+  margin-bottom: 25px;
+  width: 70vw;
+}
+
+.img-done {
+  height: 100%;
+  width: 100%;
+}
+
+.recipie-done-description {
+  display: flex;
+  flex-direction: column;
+  font-size: 12px;
+  justify-content: center;
+  line-height: 13px;
+  margin-left: 10px;
+  padding: 5px;
+}
+
+.recipie-done-description a {
+  text-decoration: none;
+}
+
+.recipie-done-description h6 {
+  color: #1a1b1c;
+  font-family: Arial Helvetica , sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 12px;
+  margin: 8px;
+}
+
+.done-category {
+  color: #797d86;
+  font-family: Arial Helvetica , sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 12px;
+  text-align: center;
+}
+
+.recipie-donep {
+  color: #1a1b1c;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 11px;
+  text-align: center;
+}
+
+.share-copy {
+  margin: 10px;
+}
+
+.done-btn-favorit {
+  background-color: red;
+  margin: auto;
+}
+
+.favorit-done {
+  margin: 10px;
+}
+
+@media screen and ( max-width : 860px ) {
+
+  .recipie-done {
+    background-color: #e2e2e4;
+    border: 1px solid #b1b1b1;
+    border-radius: 5px;
+    display: flex;
+    height: 210px;
+    justify-content: center;
+    padding: 10px;
+    width: 340px;
+  }
+
+  .recipie-done-description {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    font-size: 10px;
+    justify-content: center;
+    line-height: 10px;
+    margin-left: 10px;
+    padding: 5px;
+  }
+
+  .recipie-done-description h6 {
+    color: #1a1b1c;
+    font-family: Arial Helvetica , sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 12px;
+    margin: 20px 10px 10px;
+  }
+
+  .buttons-recipies-done {
+    display: flex;
+    margin-bottom: 7px;
+  }
+
+}

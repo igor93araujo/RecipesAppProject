@@ -69,8 +69,18 @@
   padding: 2% 0 3% 3%;
 }
 
-.finishRecipeBtn {
+.finishRecipeButton {
   background-color: rgba(252, 196, 54, 1);
+  border: none;
+  bottom: 0;
+  color: white;
+  font-size: 1.5rem;
+  position: fixed;
+  width: 40%;
+}
+
+.finishRecipeButtonDisabled {
+  background-color: rgba(252, 196, 54, 0.5);
   border: none;
   bottom: 0;
   color: white;

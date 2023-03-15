@@ -41,12 +41,16 @@ export default function Login() {
     });
   };
 
-  const handleClick = () => {
-    localStorage.setItem('user', JSON.stringify({ email: user.email }));
-    history.push('/meals');
-  };
-
   const verifyBtn = !(validaEmail && validaPassword);
+
+  const handleClick = () => {
+    if (!verifyBtn) {
+      localStorage.setItem('user', JSON.stringify({ email: user.email }));
+      history.push('/meals');
+    } else {
+      global.alert('Digite um email válido e uma senha com no mínimo 6 caracteres');
+    }
+  };
 
   return (
     <section className="login_page">
@@ -83,7 +87,7 @@ export default function Login() {
         <button
           type="button"
           data-testid="login-submit-btn"
-          disabled={ verifyBtn }
+          // disabled={ verifyBtn }
           onClick={ handleClick }
           className={
             verifyBtn

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import ButtonsFavoriteShare from '../components/ButtonsFavoriteShare';
@@ -20,7 +20,10 @@ function DrinksInProgress({ match: { params: { id } } }) {
   );
 
   const [allIngredientsChecked, setAllIngredientsChecked] = useState(false);
-  const ingredients = useMemo(() => [], []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const ingredients = [];
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  let newIngredients = [];
   const medidas = [];
   const limit = 8;
 
@@ -46,6 +49,7 @@ function DrinksInProgress({ match: { params: { id } } }) {
     Object.keys(obj).forEach((key) => {
       if (obj[key] !== '' && obj[key] !== null && key.startsWith('strIngredient')) {
         ingredients.push(obj[key]);
+        newIngredients = [...new Set(ingredients)].slice(0, `${limit}`);
       }
     });
     Object.keys(obj).forEach((key) => {
@@ -114,7 +118,7 @@ function DrinksInProgress({ match: { params: { id } } }) {
             </div>
             <div className="steps">
               <h3>Ingredients</h3>
-              {ingredients.slice(0, `${limit}`).map((ingredient, indice) => (
+              {newIngredients.map((ingredient, indice) => (
                 <div key={ indice }>
                   <label
                     htmlFor={ `${indice}-ingredient-step` }
@@ -150,7 +154,9 @@ function DrinksInProgress({ match: { params: { id } } }) {
         data-testid="finish-recipe-btn"
         disabled={ !allIngredientsChecked }
         onClick={ () => handleFinishRecipe() }
-        className="finishRecipeBtn"
+        className={
+          allIngredientsChecked ? 'finishRecipeButton' : 'finishRecipeButtonDisabled'
+        }
       >
         Finish Recipe
       </button>

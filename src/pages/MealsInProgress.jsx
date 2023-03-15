@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import ButtonsFavoriteShare from '../components/ButtonsFavoriteShare';
@@ -20,7 +20,10 @@ function MealsInProgress({ match: { params: { id } } }) {
   );
 
   const [allIngredientsChecked, setAllIngredientsChecked] = useState(false);
-  const ingredients = useMemo(() => [], []);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const ingredients = [];
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  let newIngredients = [];
   const medidas = [];
   const limit = 8;
 
@@ -46,6 +49,7 @@ function MealsInProgress({ match: { params: { id } } }) {
     Object.keys(obj).forEach((key) => {
       if (obj[key] !== '' && key.startsWith('strIngredient')) {
         ingredients.push(obj[key]);
+        newIngredients = [...new Set(ingredients)].slice(0, `${limit}`);
       }
     });
     Object.keys(obj).forEach((key) => {
@@ -61,14 +65,16 @@ function MealsInProgress({ match: { params: { id } } }) {
       .then((data) => setDetails(data.meals));
   }, [id]);
 
+  // Verifica se todos os ingredientes foram marcados como concluídos
   useEffect(() => {
-    // Verifica se todos os ingredientes foram marcados como concluídos
-    const isAllIngredientsChecked = ingredients.slice(0, limit)
-      .every((ingredient) => (
-        inProgress.meals[id] && inProgress.meals[id].includes(ingredient)
-      ));
-    setAllIngredientsChecked(isAllIngredientsChecked);
-  }, [inProgress, ingredients, id, limit]);
+    if (inProgress.meals[id] !== undefined) {
+      if (inProgress.meals[id].length === newIngredients.length) {
+        setAllIngredientsChecked(true);
+      } else {
+        setAllIngredientsChecked(false);
+      }
+    }
+  }, [inProgress, newIngredients, id]);
 
   const history = useHistory();
   const handleFinishRecipe = () => {
@@ -113,7 +119,7 @@ function MealsInProgress({ match: { params: { id } } }) {
             </div>
             <div className="steps">
               <h3>Ingredients</h3>
-              {ingredients.slice(0, `${limit}`).map((ingredient, indice) => (
+              {newIngredients.map((ingredient, indice) => (
                 <div key={ indice }>
                   <label
                     htmlFor={ `${indice}-ingredient-step` }
@@ -149,7 +155,9 @@ function MealsInProgress({ match: { params: { id } } }) {
         data-testid="finish-recipe-btn"
         disabled={ !allIngredientsChecked }
         onClick={ () => handleFinishRecipe() }
-        className="finishRecipeBtn"
+        className={
+          allIngredientsChecked ? 'finishRecipeButton' : 'finishRecipeButtonDisabled'
+        }
       >
         Finish Recipe
       </button>

@@ -22,4 +22,4 @@ O layout tem como foco dispositivos móveis, dessa forma todos os protótipos v�
 - Utilização de _React Hook useContext_
 - Utilização de _React Hook useEffect_
 
-## Acesse aqui: 
+## Acesse aqui: <a href="https://recipes-app-project-ecru.vercel.app/">App de receitas</>

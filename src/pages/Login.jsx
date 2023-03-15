@@ -48,7 +48,7 @@ export default function Login() {
       localStorage.setItem('user', JSON.stringify({ email: user.email }));
       history.push('/meals');
     } else {
-      global.alert('Digite um email válido e uma senha com no mínimo 6 caracteres');
+      global.alert('Digite um email válido e uma senha com mais de 6 caracteres');
     }
   };
 

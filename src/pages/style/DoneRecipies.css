@@ -3,9 +3,13 @@
   border: 1px solid #b1b1b1;
   border-radius: 5px;
   display: flex;
-  height: 200px;
   justify-content: center;
-  width: 340px;
+  width: 30%;
+}
+
+.img-done {
+  border-radius: 5px 0 0 5px;
+  width: 100%;
 }
 
 section nav {
@@ -41,25 +45,20 @@ section nav {
 .recipie-done button {
   background-color: transparent;
   border: none;
-  padding: 0;
 }
 
 .all-recipies-dones {
   display: flex;
   flex-wrap: wrap;
   gap: 18px;
-  justify-content: center;
+  justify-content: space-around;
   margin: auto;
   margin-bottom: 25px;
-  width: 70vw;
-}
-
-.img-done {
-  height: 100%;
-  width: 100%;
+  width: 80%;
 }
 
 .recipie-done-description {
+  align-items: center;
   display: flex;
   flex-direction: column;
   font-size: 12px;
@@ -67,6 +66,7 @@ section nav {
   line-height: 13px;
   margin-left: 10px;
   padding: 5px;
+  width: 100%;
 }
 
 .recipie-done-description a {
@@ -107,8 +107,7 @@ section nav {
 }
 
 .done-btn-favorit {
-  background-color: red;
-  margin: auto;
+  margin-left: 10px;
 }
 
 .favorit-done {
@@ -118,25 +117,29 @@ section nav {
 @media screen and ( max-width : 860px ) {
 
   .recipie-done {
-    background-color: #e2e2e4;
-    border: 1px solid #b1b1b1;
-    border-radius: 5px;
-    display: flex;
-    height: 210px;
-    justify-content: center;
-    padding: 10px;
-    width: 340px;
-  }
-
-  .recipie-done-description {
     align-items: center;
     display: flex;
     flex-direction: column;
-    font-size: 10px;
-    justify-content: center;
-    line-height: 10px;
-    margin-left: 10px;
-    padding: 5px;
+    width: 70%;
+  }
+
+  .img-done {
+    border-radius: 5px 5px 0 0;
+    width: 50%;
+  }
+
+  .recipie-done-description {
+    height: 50%;
+    width: 90%;
+  }
+
+  .recipie-done-description p {
+    color: #1a1b1c;
+    font-size: small;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 11px;
+    text-align: center;
   }
 
   .recipie-done-description h6 {
@@ -150,8 +153,13 @@ section nav {
   }
 
   .buttons-recipies-done {
-    display: flex;
     margin-bottom: 7px;
+    width: 50%;
+  }
+
+  .all-recipies-dones {
+    margin: 0%;
+    width: 100%;
   }
 
 }

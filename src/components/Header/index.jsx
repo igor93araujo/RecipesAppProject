@@ -20,10 +20,15 @@ function Header({ title, isIconProfile, isIconSearch = false }) {
   return (
     <>
       <header title="Meals">
-        <div className="leftElements">
+        <button
+          type="button"
+          onClick={ () => history.push('/meals') }
+          className="leftElements"
+        >
           <img src={ appIcon } alt="icon" className="appIcon" />
           <img src={ recipesApp } alt="title" className="appTitle" />
-        </div>
+        </button>
+
         <div className="rightElements">
           {isIconSearch && (
             <button

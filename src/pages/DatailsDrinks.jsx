@@ -1,20 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Recomendations from '../components/Recomendations';
 import ButtonStartRecipe from '../components/ButtonStartRecipe';
 import ButtonsFavoriteShare from '../components/ButtonsFavoriteShare';
 import './Details.css';
+import { AppContext } from '../context/AppContext';
 
 export default function DetailsDrinks({ match: { params: { id } } }) {
   const [detailsDrink, setDrinkDetails] = useState([]);
+
+  const {
+    isLoading,
+    setIsLoading,
+  } = useContext(AppContext);
 
   const ingredients = [];
   const medidas = [];
 
   useEffect(() => {
+    setIsLoading(true);
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
       .then((response) => response.json())
       .then((data) => setDrinkDetails(data.drinks));
+    setIsLoading(false);
   }, [id]);
 
   const obj = detailsDrink[0];
@@ -34,6 +42,10 @@ export default function DetailsDrinks({ match: { params: { id } } }) {
   return (
     <section className="fullSection">
       <h1 className="detailMealsTitle">Details Drinks</h1>
+      {
+        isLoading
+      && <p style={ { color: 'purple' } }>Loading ... </p>
+      }
       {
         detailsDrink.length > 0
           ? (

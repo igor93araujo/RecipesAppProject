@@ -7,13 +7,17 @@ export default function MealsResult() {
 
   const {
     mealsArray,
+    isLoading,
+    setIsLoading,
   } = useContext(AppContext);
   const maxElements = 12;
 
   const fetchInitialMeals = async () => {
+    setIsLoading(true);
     const fetching = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
     const data = await fetching.json();
     setInicialArray(data.meals);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -27,6 +31,10 @@ export default function MealsResult() {
 
   return (
     <div className="mealsResults">
+      {
+        isLoading
+      && <p style={ { color: 'purple' } }>Loading ... </p>
+      }
       {
         mealsArray.length > 0 ? mealsArray.slice(0, maxElements).map((meal, index) => (
           <div

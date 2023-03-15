@@ -32,16 +32,6 @@ function DoneReceipes() {
     setFilteredRecipes(FinishedRecipes);
   }, []);
 
-  // const disfavorRecipe = (id) => {
-  //   const items = JSON.parse(localStorage.getItem('doneRecipes'));
-  //   const index = items.findIndex((item) => item.id === id);
-  //   items.splice(index, 1);
-  //   localStorage.setItem('doneRecipes', JSON.stringify(items));
-  //   const recipies = JSON.parse(localStorage.getItem('doneRecipes'));
-  //   console.log(recipies);
-  //   setFilteredRecipes(recipies);
-  // };
-
   const history = useHistory();
 
   return (
@@ -90,11 +80,11 @@ function DoneReceipes() {
             </button>
             <div className="recipie-done-description">
               <Link to={ `/${recipe.type}s/${recipe.id}` }>
-                <h6
+                <p
                   data-testid={ `${index}-horizontal-name` }
                 >
                   {`Name: ${recipe.name}`}
-                </h6>
+                </p>
               </Link>
               <p data-testid={ `${index}-horizontal-top-text` } className="recipie-donep">
                 {recipe.alcoholicOrNot}
@@ -106,7 +96,9 @@ function DoneReceipes() {
                 data-testid={ `${index}-horizontal-done-date` }
                 className="recipie-donep"
               >
-                {`Done in : ${recipe.doneDate}`}
+                {`Done in :
+                  ${new Date(recipe.doneDate).getDate()}/${new Date(recipe.doneDate)
+            .getMonth() + 1}/${new Date(recipe.doneDate).getFullYear()}`}
               </p>
               {
                 recipe.type === 'meal' && (

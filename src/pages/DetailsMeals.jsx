@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ReactPlayer from 'react-player';
 import PropTypes from 'prop-types';
 import Recomendations from '../components/Recomendations';
@@ -6,17 +6,25 @@ import './Details.css';
 
 import ButtonStartRecipe from '../components/ButtonStartRecipe';
 import ButtonsFavoriteShare from '../components/ButtonsFavoriteShare';
+import { AppContext } from '../context/AppContext';
 
 export default function DetailsMeals({ match: { params: { id } } }) {
   const [detailsMeals, setDetailsMeals] = useState('');
+
+  const {
+    isLoading,
+    setIsLoading,
+  } = useContext(AppContext);
 
   const ingredients = [];
   const medidas = [];
 
   useEffect(() => {
+    setIsLoading(true);
     fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
       .then((respose) => respose.json())
       .then((data) => setDetailsMeals(data.meals));
+    setIsLoading(false);
   }, [id]);
 
   const obj = detailsMeals[0];
@@ -84,6 +92,10 @@ export default function DetailsMeals({ match: { params: { id } } }) {
   return (
     <section className="fullSection">
       <h1 className="detailMealsTitle">Details Meals</h1>
+      {
+        isLoading
+      && <p style={ { color: 'purple' } }>Loading ... </p>
+      }
       {
         detailsMeals.length > 0
           ? (

@@ -78,13 +78,18 @@ export default function Login() {
           value={ password }
           name="password"
           onChange={ verifyPassword }
-          placeholder="Password"
+          placeholder="Password (min. 6 characters)"
         />
         <button
           type="button"
           data-testid="login-submit-btn"
           disabled={ verifyBtn }
           onClick={ handleClick }
+          className={
+            verifyBtn
+              ? 'login_btn_disabled'
+              : 'login_btn'
+          }
         >
           ENTER
         </button>

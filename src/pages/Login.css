@@ -66,7 +66,7 @@ body {
   font-weight: 100;
 }
 
-.login_text button {
+.login_btn {
   background-color: #fcc436;
   border: 0.1px solid #fcc436;
   border-radius: 5px;
@@ -78,6 +78,20 @@ body {
   margin-bottom: 2%;
   padding: 0 10px;
   width: 60%;
+}
+
+.login_btn_disabled {
+  background-color: #c6ad6e;
+  border: 0.1px solid #fcc436;
+  border-radius: 5px;
+  color: white;
+  font-family: Roboto , sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  height: 40px;
+  margin-bottom: 2%;
+  padding: 0 10px;
+  width: 80%;
 }
 
 .login_text h1 {
@@ -164,7 +178,7 @@ body {
     font-weight: 100;
   }
 
-  .login_text button {
+  .login_btn {
     background-color: #fcc436;
     border: 0.1px solid #fcc436;
     border-radius: 5px;

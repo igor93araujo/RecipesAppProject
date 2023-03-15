@@ -82,7 +82,7 @@ export default function Login() {
           value={ password }
           name="password"
           onChange={ verifyPassword }
-          placeholder="Password (min. 6 characters)"
+          placeholder="Password (min. 7 characters)"
         />
         <button
           type="button"

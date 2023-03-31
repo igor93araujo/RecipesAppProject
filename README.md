@@ -29,7 +29,7 @@ O layout tem como foco dispositivos móveis.
 
 ### Sobre o desenvolvimento
 
-  - Projeto desenvolvido em grupo (3 programadores).
+  - Projeto desenvolvido em grupo (4 programadores).
 
   - Duração: dez dias.
   
